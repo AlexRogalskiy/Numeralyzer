@@ -61,7 +61,7 @@ public abstract class DelegatedRecursiveAction<T, U extends DelegatedRecursiveAc
     @Override
     protected void compute() {
         if (this.validateCondition()) {
-            BaseDispatcher.forkJoinPool.invokeAll(this.createSubtasks());
+            GenericDispatcher.forkJoinPool.invokeAll(this.createSubtasks());
         } else {
             this.processing(this.value);
         }

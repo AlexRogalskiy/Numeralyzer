@@ -30,13 +30,13 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 
 /**
- * Base dispatcher implementation
+ * Generic dispatcher implementation
  *
  * @author Alex
  * @version 1.0.0
  * @since 2018-11-30
  */
-public class BaseDispatcher {
+public class GenericDispatcher {
 
     /**
      * Default Logger instance
@@ -48,7 +48,7 @@ public class BaseDispatcher {
     public static final ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();//new ForkJoinPool(2);
 
     public static <R> R execute(final ForkJoinTask<R> task) {
-        BaseDispatcher.forkJoinPool.execute(task);
+        GenericDispatcher.forkJoinPool.execute(task);
         return task.join();
         //CPoolUtils.forkJoinPool.invoke(task);
     }

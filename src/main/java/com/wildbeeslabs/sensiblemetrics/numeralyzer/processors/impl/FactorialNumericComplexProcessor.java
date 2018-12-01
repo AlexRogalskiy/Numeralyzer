@@ -25,16 +25,18 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl;
 
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IFactorialNumericProcessor;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
- * Factorial numeric processor implementation
+ * Factorial numeric complex processor implementation
  *
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-public class FactorialNumericProcessor extends ABaseNumericProcessor<Integer, Long> implements IFactorialNumericProcessor<Integer, Long> {
+public class FactorialNumericComplexProcessor extends ABaseNumericProcessor<Long, Long> implements IFactorialNumericProcessor<Long, Long> {
 
     /**
      * Default empty numeric result
@@ -43,10 +45,19 @@ public class FactorialNumericProcessor extends ABaseNumericProcessor<Integer, Lo
     /**
      * Default numeric divisors
      */
+    private static final long DIVISOR_2 = 2;
     private static final long DIVISOR_5 = 5;
 
-    public FactorialNumericProcessor() {
-        getLogger().debug("Initializing factorial numeric processor ...");
+    /**
+     * Default count numeric maps
+     */
+    private final Map<Long, Long> mapOfTwo;
+    private final Map<Long, Long> mapOfFive;
+
+    public FactorialNumericComplexProcessor() {
+        getLogger().debug("Initializing factorial numeric complex processor ...");
+        mapOfTwo = new HashMap<>();
+        mapOfFive = new HashMap<>();
     }
 
     /**
@@ -56,36 +67,46 @@ public class FactorialNumericProcessor extends ABaseNumericProcessor<Integer, Lo
      * @return number of trailing zeros
      */
     @Override
-    public Long countTrailingZeros(Integer value) {
+    public Long countTrailingZeros(Long value) {
         if (Objects.isNull(value)) {
             return DEFAULT_EMPTY_RESULT;
         }
         return trailingZeros(value);
     }
 
-    private long trailingZeros(int num) {
-        int count = 0;
-        while (num > 0) {
-            num /= DIVISOR_5;
-            count += num;
+    private long trailingZeros(long n) {
+        if (n < DIVISOR_5) {
+            return 0;
+        }
+        long countFive = 0;
+        long countTwo = 0;
+        for (int i = 1; i <= n; i++) {
+            if (i % DIVISOR_2 == 0) {
+                countTwo += countExistance(i, DIVISOR_2, mapOfTwo);
+            }
+            if (i % DIVISOR_5 == 0) {
+                countFive += countExistance(i, DIVISOR_5, mapOfFive);
+            }
+        }
+        return (countFive < countTwo) ? countFive : countTwo;
+    }
+
+    private long countExistance(long n, long m, Map<Long, Long> map) {
+        long temp = n;
+        long count = 0;
+        double num = (double) n;
+        while (num / m == n / m) {
+            count++;
+            n = n / m;
+            num = (double) n;
+            if (map.containsKey(n)) {
+                count += map.get(n);
+                break;
+            }
+        }
+        if (!map.containsKey(temp)) {
+            map.put(temp, count);
         }
         return count;
     }
-
-//    public int countTrailingZeros2(int value) {
-//        int countOfZeros = 0;
-//        for (int i = 2; i <= value; i++) {
-//            countOfZeros += countFactorsOf5(i);
-//        }
-//        return countOfZeros;
-//    }
-//
-//    private int countFactorsOf5(int i) {
-//        int count = 0;
-//        while (i % 5 == 0) {
-//            count++;
-//            i /= 5;
-//        }
-//        return count;
-//    }
 }

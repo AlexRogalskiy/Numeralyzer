@@ -24,7 +24,7 @@
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics;
 
 /**
- * Base metrics interface declaration
+ * Generic metrics interface declaration
  *
  * @author alexander.rogalskiy
  * @version 1.0

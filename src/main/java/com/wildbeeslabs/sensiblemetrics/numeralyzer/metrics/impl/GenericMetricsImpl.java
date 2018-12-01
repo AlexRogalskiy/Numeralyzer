@@ -30,7 +30,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Default generic matcher implementation
+ * Default generic metrics implementation
  *
  * @param <T>
  * @param <E>

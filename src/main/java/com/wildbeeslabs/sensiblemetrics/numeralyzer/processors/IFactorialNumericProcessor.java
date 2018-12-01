@@ -34,5 +34,5 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors;
  */
 public interface IFactorialNumericProcessor<T, E> extends IBaseNumericProcessor<T, E> {
 
-    int countTrailingZeros(T value);
+    E countTrailingZeros(T value);
 }

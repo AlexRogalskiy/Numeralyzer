@@ -35,7 +35,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.RecursiveTask;
 
 /**
- * Recursive task implementation
+ * Delegated recursive task implementation
  *
  * @param <T>
  * @param <R>
@@ -47,7 +47,6 @@ import java.util.concurrent.RecursiveTask;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-
 public abstract class DelegatedRecursiveTask<T, R, U extends DelegatedRecursiveTask<T, R, U>> extends RecursiveTask<R> {
 
     /**
@@ -64,7 +63,7 @@ public abstract class DelegatedRecursiveTask<T, R, U extends DelegatedRecursiveT
     @Override
     protected R compute() {
         if (this.validateCondition()) {
-            return BaseDispatcher.forkJoinPool.invokeAll(this.createSubtasks()).stream().map(e -> {
+            return GenericDispatcher.forkJoinPool.invokeAll(this.createSubtasks()).stream().map(e -> {
                 try {
                     return e.get();
                 } catch (InterruptedException | ExecutionException ex) {
