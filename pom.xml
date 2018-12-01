@@ -1,0 +1,302 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wildbeeslabs.sensiblemetrics</groupId>
+    <artifactId>Numeralizer</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>Numeric Analyzer</name>
+    <url>http://maven.apache.org</url>
+    <description>Numeric analyzer</description>
+    <inceptionYear>2018</inceptionYear>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <unit-tests.skip>true</unit-tests.skip>
+        <integration-tests.skip>true</integration-tests.skip>
+
+        <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss'Z'</maven.build.timestamp.format>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <log4j.version>1.2.17</log4j.version>
+        <junit.version>4.11</junit.version>
+        <lombok.version>1.16.16</lombok.version>
+        <apache.commons.version>3.5</apache.commons.version>
+
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.jacoco.reportPaths>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPaths>
+        <sonar.language>java</sonar.language>
+
+        <surefire.forkNumber>0</surefire.forkNumber>
+
+        <jacoco.dataFile>${project.basedir}/../target/jacoco.exec</jacoco.dataFile>
+        <jacoco.reporting.outputDirectory>${project.basedir}/../target/reports/jacoco</jacoco.reporting.outputDirectory>
+        <jacoco.inclNoLocationClasses>true</jacoco.inclNoLocationClasses>
+    </properties>
+
+    <issueManagement>
+        <url>https://github.com/AlexRogalskiy/numeralizer/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <email>alexander.rogalsky@yandex.ru</email>
+            <name>Alexander Rogalsky</name>
+            <url>https://github.com/AlexRogalskiy</url>
+            <id>AlexRogalskiy</id>
+        </developer>
+    </developers>
+
+    <prerequisites>
+        <maven>3.0.0</maven>
+    </prerequisites>
+
+    <organization>
+        <name>WildBees Labs</name>
+        <url>http://www.wildbeeslabs.com/</url>
+    </organization>
+
+    <scm>
+        <connection>scm:git:git://github.com/AlexRogalskiy/numeralizer.git</connection>
+        <developerConnection>scm:git:git@github.com:AlexRogalskiy/numeralizer.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/AlexRogalskiy/numeralizer</url>
+    </scm>
+
+    <reporting>
+        <outputDirectory>${project.build.directory}/site</outputDirectory>
+    </reporting>
+
+    <build>
+        <directory>${project.basedir}/target</directory>
+        <outputDirectory>${project.build.directory}/classes</outputDirectory>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>
+        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+        <testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>${project.basedir}/src/test/resources</directory>
+            </testResource>
+        </testResources>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.4</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                                <mainClass>com.wildbeeslabs.sensiblemetrics.numeralyzer.AppLoader</mainClass>
+                                <classpathPrefix>dependency-jars/</classpathPrefix>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.5.1</version>
+                    <executions>
+                        <execution>
+                            <id>copy-dependencies</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>copy-dependencies</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/dependency-jars/</outputDirectory>
+                                <overWriteReleases>false</overWriteReleases>
+                                <overWriteSnapshots>false</overWriteSnapshots>
+                                <overWriteIfNewer>true</overWriteIfNewer>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
+                    <configuration>
+                        <executable>true</executable>
+                        <showDeprecation>true</showDeprecation>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <compilerArgument>-parameters</compilerArgument>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <mainClass>com.wildbeeslabs.sensiblemetrics.numeralyzer.AppLoader</mainClass>
+                            </manifest>
+                        </archive>
+                        <descriptorRefs>
+                            <descriptorRef>jar-with-dependencies</descriptorRef>
+                        </descriptorRefs>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>make-assembly</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <configuration>
+                        <skipTests>${integration-tests.skip}</skipTests>
+                        <includes>
+                            <include>**/*IT.java</include>
+                        </includes>
+                        <excludes>
+                            <exclude>com.demo.alertmanager.*</exclude>
+                        </excludes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <skipTests>${unit-tests.skip}</skipTests>
+                        <excludes>
+                            <exclude>**/*IT.java</exclude>
+                            <exclude>com.demo.alertmanager.integration.*</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <configuration>
+                        <destFile>${sonar.jacoco.reportPaths}</destFile>
+                        <append>true</append>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>default-prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>default-report</id>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${jacoco.reporting.outputDirectory}</outputDirectory>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>default-report-aggregate</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>report-aggregate</goal>
+                            </goals>
+                            <configuration>
+                                <dataFileIncludes>
+                                    <dataFileInclude>${jacoco.dataFile}</dataFileInclude>
+                                </dataFileIncludes>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <dependencies>
+        <!-- Command-line reader dependencies -->
+        <dependency>
+            <groupId>args4j</groupId>
+            <artifactId>args4j</artifactId>
+            <version>2.33</version>
+        </dependency>
+
+        <!-- Testing dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Design stub dependencies -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Logging dependencies -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
+        <!-- Apache Commons dependencies -->
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.7</version>
+        </dependency>
+    </dependencies>
+</project>
