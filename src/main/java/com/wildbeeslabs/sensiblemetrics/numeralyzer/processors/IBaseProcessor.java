@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors;
 
 /**
- * Generic metrics interface declaration
+ * Base processor declaration
  *
  * @param <T>
  * @param <E>
@@ -32,11 +32,7 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics;
  * @version 1.0
  * @since 2018-11-30
  */
-public interface IGenericMetrics<T, E> {
+public interface IBaseProcessor<T, E> {
 
-    double getCoefficientA();
-
-    double getCoefficientB();
-
-    double getCoefficientC();
+    //void process(int i);
 }

@@ -23,11 +23,12 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.functions.Matcher;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IGenericMetrics;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+
+import java.util.function.Function;
 
 /**
  * Default generic metrics implementation
@@ -41,17 +42,17 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode
 @ToString
-public class GenericMetricsImpl<T, E> extends ABaseMetricsImpl<T, E> implements IGenericMetrics {
+public class GenericMetricsImpl<T, E> extends ABaseMetricsImpl<T, E> implements IGenericMetrics<T, E> {
 
-    protected final Matcher marcher;
+    protected final Function<T, E> operator;
 
-    public GenericMetricsImpl(final Matcher<T> marcher) {
-        this.marcher = marcher;
+    public GenericMetricsImpl(final Function<T, E> operator) {
+        this.operator = operator;
     }
 
     @Override
-    public boolean matches(final Object o) {
-        return this.marcher.matches(o);
+    public boolean matches(final T o) {
+        return this.operator == null;
     }
 
     @Override

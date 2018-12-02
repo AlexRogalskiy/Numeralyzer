@@ -23,19 +23,18 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IBaseNumericProcessor;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IGenericFactorialProcessor;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.CommandLineProcessor;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.FactorialNumericProcessor;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.FactorialProcessorImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 /**
- * Numeric analyzer class to operate on input / output data stream
+ * Numeric analyzer class to operate on input / output number stream
  *
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
- *
  */
 public class NumericAnalyzer {
 
@@ -49,7 +48,7 @@ public class NumericAnalyzer {
         final CommandLineProcessor cmdProcessor = new CommandLineProcessor(args);
         LOGGER.info("Initializing numeric analyzer...");
 
-        final IBaseNumericProcessor analyzer = new FactorialNumericProcessor(cmdProcessor);
-        analyzer.process(-59);
+        final IGenericFactorialProcessor<Integer, Long> analyzer = new FactorialProcessorImpl(null);
+        analyzer.countTrailingZeros(-59);
     }
 }

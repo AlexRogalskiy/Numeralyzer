@@ -23,30 +23,20 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IFactorialNumericProcessor;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IGenericMetrics;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 /**
- * Factorial numeric complex processor implementation
+ * Factorial complex processor implementation
  *
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-public class FactorialNumericComplexProcessor extends ABaseNumericProcessor<Long, Long> implements IFactorialNumericProcessor<Long, Long> {
-
-    /**
-     * Default empty numeric result
-     */
-    private static final Long DEFAULT_EMPTY_RESULT = Long.valueOf(0);
-    /**
-     * Default numeric divisors
-     */
-    private static final long DIVISOR_2 = 2;
-    private static final long DIVISOR_5 = 5;
+public class FactorialComplexProcessorImpl extends GenericFactorialProcessorImpl<Long, Long> {
 
     /**
      * Default count numeric maps
@@ -54,24 +44,25 @@ public class FactorialNumericComplexProcessor extends ABaseNumericProcessor<Long
     private final Map<Long, Long> mapOfTwo;
     private final Map<Long, Long> mapOfFive;
 
-    public FactorialNumericComplexProcessor() {
+    public FactorialComplexProcessorImpl(final IGenericMetrics<Long, Long> metrics) {
+        super(metrics);
         getLogger().debug("Initializing factorial numeric complex processor ...");
-        mapOfTwo = new HashMap<>();
-        mapOfFive = new HashMap<>();
+        this.mapOfTwo = new HashMap<>();
+        this.mapOfFive = new HashMap<>();
     }
 
     /**
-     * Returns trailing 0s in a factorial of n
+     * Returns trailing 0s in a factorial of value
      *
      * @param value - value to be factorized
      * @return number of trailing zeros
      */
     @Override
     public Long countTrailingZeros(Long value) {
-        if (Objects.isNull(value)) {
+        if (Objects.isNull(value) || value < 0) {
             return DEFAULT_EMPTY_RESULT;
         }
-        return trailingZeros(value);
+        return this.trailingZeros(value);
     }
 
     private long trailingZeros(long n) {
@@ -82,10 +73,10 @@ public class FactorialNumericComplexProcessor extends ABaseNumericProcessor<Long
         long countTwo = 0;
         for (int i = 1; i <= n; i++) {
             if (i % DIVISOR_2 == 0) {
-                countTwo += countExistance(i, DIVISOR_2, mapOfTwo);
+                countTwo += this.countExistance(i, DIVISOR_2, this.mapOfTwo);
             }
             if (i % DIVISOR_5 == 0) {
-                countFive += countExistance(i, DIVISOR_5, mapOfFive);
+                countFive += this.countExistance(i, DIVISOR_5, this.mapOfFive);
             }
         }
         return (countFive < countTwo) ? countFive : countTwo;

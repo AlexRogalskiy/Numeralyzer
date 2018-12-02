@@ -23,7 +23,8 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IBaseNumericProcessor;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IGenericMetrics;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IBaseProcessor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -36,7 +37,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 /**
- * Abstract base numeric processor class with default implementation
+ * Abstract base processor class with default implementation
  *
  * @param <T>
  * @param <E>
@@ -47,7 +48,7 @@ import java.util.stream.Stream;
 @Data
 @EqualsAndHashCode
 @ToString
-public abstract class ABaseNumericProcessor<T, E> implements IBaseNumericProcessor<T, E> {
+public abstract class ABaseProcessorImpl<T, E> implements IBaseProcessor<T, E> {
 
     /**
      * Default logger instance
@@ -58,8 +59,11 @@ public abstract class ABaseNumericProcessor<T, E> implements IBaseNumericProcess
      */
     public static final String DEFAULT_TOKEN_DELIMITER = "[,./?;:!-\"\\s]+?";
 
-    public ABaseNumericProcessor() {
-        getLogger().debug("Initializing base numeric processor ...");
+    private final IGenericMetrics<T, E> metrics;
+
+    public ABaseProcessorImpl(final IGenericMetrics<T, E> metrics) {
+        getLogger().debug("Initializing base processor ...");
+        this.metrics = metrics;
     }
 
     protected <E> Stream<E> getFilteredStream(final Stream<E> stream, final Function<CharSequence, CharSequence> tokenFilter, final String tokenDelim) {
@@ -69,9 +73,8 @@ public abstract class ABaseNumericProcessor<T, E> implements IBaseNumericProcess
                 .map(item -> (E) item);
     }
 
-    @Override
-    public E numerate(T value) {
-        return null;
+    protected IGenericMetrics<T, E> getMetrics() {
+        return metrics;
     }
 
     protected Logger getLogger() {

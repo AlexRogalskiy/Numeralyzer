@@ -21,20 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.Numerable;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IGenericMetrics;
+
+import java.util.Objects;
 
 /**
- * Base numeric processor declaration
+ * Factorial processor implementation
  *
- * @param <T>
- * @param <E>
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-public interface IBaseNumericProcessor<T, E> extends Numerable<T, E> {
+public class FactorialProcessorImpl extends GenericFactorialProcessorImpl<Integer, Long> {
 
-    //void process(int i);
+    public FactorialProcessorImpl(final IGenericMetrics<Integer, Long> metrics) {
+        super(metrics);
+        getLogger().debug("Initializing factorial numeric processor ...");
+    }
+
+    /**
+     * Returns trailing 0s in a factorial of value
+     *
+     * @param value - value to be factorized
+     * @return number of trailing zeros
+     */
+    @Override
+    public Long countTrailingZeros(Integer value) {
+        if (Objects.isNull(value) || value < 0) {
+            return DEFAULT_EMPTY_RESULT;
+        }
+        return this.trailingZeros(value);
+    }
+
+    private long trailingZeros(int num) {
+        int count = 0;
+        while (num > 0) {
+            num /= DIVISOR_5;
+            count += num;
+        }
+        return count;
+    }
 }

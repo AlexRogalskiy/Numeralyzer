@@ -41,5 +41,4 @@ public interface ICommandLineProcessor {
     File getOutputSource();
 
     boolean isIgnoreCase();
-
 }
