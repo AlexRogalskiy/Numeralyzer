@@ -27,8 +27,6 @@ import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IGenericMetrics;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.util.function.Function;
-
 /**
  * Default generic metrics implementation
  *
@@ -40,29 +38,13 @@ import java.util.function.Function;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public abstract class GenericMetricsImpl<T, E> extends ABaseMetricsImpl<T, E> implements IGenericMetrics<T, E> {
+public abstract class GenericMetricsImpl<T, E> extends ABaseMetricsImpl implements IGenericMetrics<T, E> {
 
-    private Function<T, E> operator;
-
+    /**
+     * Default constructor
+     */
     public GenericMetricsImpl() {
         getLogger().debug("Initializing generic metrics...");
     }
 
-    @Override
-    public boolean matches(final T o) {
-        return this.operator == null;
-    }
-
-    @Override
-    public E numerate(T value) {
-        return null;
-    }
-
-    protected Function<T, E> getOperator() {
-        return operator;
-    }
-
-    public void setOperator(Function<T, E> operator) {
-        this.operator = operator;
-    }
 }

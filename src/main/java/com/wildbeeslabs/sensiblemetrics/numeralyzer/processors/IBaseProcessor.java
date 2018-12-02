@@ -31,6 +31,4 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors;
  * @since 2018-11-30
  */
 public interface IBaseProcessor {
-
-    //void process(int i);
 }

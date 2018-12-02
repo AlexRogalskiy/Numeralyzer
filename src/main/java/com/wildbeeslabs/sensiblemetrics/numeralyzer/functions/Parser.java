@@ -35,5 +35,11 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.functions;
 @FunctionalInterface
 public interface Parser<T, E> {
 
+    /**
+     * Returns parsed value by initial input
+     *
+     * @param value - initial input
+     * @return value parsed from the initial input
+     */
     E parse(final T value);
 }

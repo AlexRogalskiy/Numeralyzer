@@ -23,6 +23,8 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics;
 
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.functions.Counter;
+
 /**
  * Factorial metrics interface declaration
  *
@@ -40,5 +42,20 @@ public interface IFactorialMetrics<T, E> extends IGenericMetrics<T, E> {
     int DIVISOR_2 = 2;
     int DIVISOR_5 = 5;
 
-    E trailingZeros(final T value);
+    /**
+     * Returns number of trailing zeros calculated based on the initial input value
+     *
+     * @param value - input value to be factorized
+     * @return number of trailing zeros
+     */
+    long numOfTrailingZeros(final T value);
+
+    /**
+     * Returns number of factors calculated based on the initial input value
+     *
+     * @param value   - input value to be factorized
+     * @param counter - calculation function to process the input value
+     * @return number of factors
+     */
+    long numOfFactors(final T value, final Counter<T> counter);
 }

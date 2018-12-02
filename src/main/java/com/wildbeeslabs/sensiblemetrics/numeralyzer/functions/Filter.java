@@ -35,5 +35,11 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.functions;
 @FunctionalInterface
 public interface Filter<T, E> {
 
+    /**
+     * Returns filtered value by initial input
+     *
+     * @param value - initial input
+     * @return value filtered from the initial input
+     */
     E apply(final T value);
 }

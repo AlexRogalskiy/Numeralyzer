@@ -23,14 +23,24 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors;
 
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IGenericMetrics;
+
 /**
  * Generic metrics processor declaration
  *
  * @param <T>
  * @param <E>
+ * @param <R>
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-public interface IGenericMetricsProcessor<T, E> extends IBaseProcessor {
+public interface IGenericMetricsProcessor<T, E, R extends IGenericMetrics<T, E>> extends IBaseProcessor {
+
+    /**
+     * Sets news metrics by input value
+     *
+     * @param metrics - input metrics to be updated
+     */
+    void setMetrics(final R metrics);
 }

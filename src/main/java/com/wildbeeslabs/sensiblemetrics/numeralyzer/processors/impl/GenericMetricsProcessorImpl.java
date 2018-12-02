@@ -39,10 +39,13 @@ import lombok.ToString;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public abstract class GenericMetricsProcessorImpl<T, E, R extends IGenericMetrics<T, E>> extends ABaseProcessorImpl implements IGenericMetricsProcessor<T, E> {
+public abstract class GenericMetricsProcessorImpl<T, E, R extends IGenericMetrics<T, E>> extends ABaseProcessorImpl implements IGenericMetricsProcessor<T, E, R> {
 
     private R metrics;
 
+    /**
+     * Default constructor
+     */
     public GenericMetricsProcessorImpl() {
         getLogger().debug("Initializing generic metrics processor ...");
     }
@@ -51,6 +54,7 @@ public abstract class GenericMetricsProcessorImpl<T, E, R extends IGenericMetric
         return metrics;
     }
 
+    @Override
     public void setMetrics(final R metrics) {
         this.metrics = metrics;
     }

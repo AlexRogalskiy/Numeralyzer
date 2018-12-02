@@ -23,13 +23,11 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.factorial;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IFactorialMetrics;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.GenericMetricsImpl;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Default standard factorial metrics implementation
+ * Standard factorial metrics implementation
  *
  * @author Alex
  * @version 1.0.0
@@ -37,17 +35,21 @@ import lombok.ToString;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class StandardFactorialMetricsImpl extends GenericMetricsImpl<Integer, Integer> implements IFactorialMetrics<Integer, Integer> {
+public class StandardFactorialMetricsImpl extends BaseFactorialMetricsImpl<Integer, Integer> {
 
+    /**
+     * Default constructor
+     */
     public StandardFactorialMetricsImpl() {
         getLogger().debug("Initializing standard factorial metrics...");
     }
 
     @Override
-    public Integer trailingZeros(final Integer value) {
-        int countOfZeros = 0, temp = value;
+    public long numOfTrailingZeros(final Integer value) {
+        long countOfZeros = 0, temp = value;
         for (int i = 2; i <= temp; i++) {
-            countOfZeros += countFactorsOf5(i);
+            //countOfZeros += this.countFactorsOf5(i);
+            countOfZeros += this.numOfFactors(i, (Integer n) -> this.countFactorsOf5(n));
         }
         return countOfZeros;
     }

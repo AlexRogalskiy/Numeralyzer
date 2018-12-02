@@ -34,11 +34,43 @@ import java.io.File;
  */
 public interface ICommandLineProcessor extends IBaseProcessor {
 
-    String getMode();
+    /**
+     * Default stream token delimiter
+     */
+    String DEFAULT_TOKEN_DELIMITER = "[,./?;:!-\"\\s]+?";
 
+    /**
+     * Verbose mode enumeration
+     */
+    enum VerboseMode {
+        AUTO, SHORT, FULL;
+    }
+
+    /**
+     * Returns output interactive mode {@link VerboseMode}
+     *
+     * @return output interactive mode
+     */
+    VerboseMode getMode();
+
+    /**
+     * Returns input source file {@link File} instance
+     *
+     * @return input source {@link File} instance
+     */
     File getInputSource();
 
+    /**
+     * Returns output source file {@link File} instance
+     *
+     * @return output source {@link File} instance
+     */
     File getOutputSource();
 
+    /**
+     * Returns ignore case mode, true - ignore case is enabled, false - otherwise
+     *
+     * @return true - if ignore case mode is enabled, false - otherwise
+     */
     boolean isIgnoreCase();
 }

@@ -33,5 +33,11 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics;
  */
 public interface Matchable<T> {
 
+    /**
+     * Returns binary value of applied matchable procedure
+     *
+     * @param value - input value
+     * @return true - if the value is matched, false - otherwise
+     */
     boolean matches(final T value);
 }

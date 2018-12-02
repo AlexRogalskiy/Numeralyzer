@@ -21,24 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.functions;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.factorial;
+
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.functions.Counter;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IFactorialMetrics;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.GenericMetricsImpl;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Matcher interface declaration
+ * Base actorial metrics implementation
  *
- * @param <T>
  * @author Alex
  * @version 1.0.0
- * @since 2018-11-30
+ * @since 2017-08-07
  */
-@FunctionalInterface
-public interface Matcher<T> {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public abstract class BaseFactorialMetricsImpl<T, E> extends GenericMetricsImpl<T, E> implements IFactorialMetrics<T, E> {
 
     /**
-     * Returns matched value by initial input
-     *
-     * @param value - initial input
-     * @return true - if the input value is matched, false - otherwise
+     * Default constructor
      */
-    boolean matches(final T value);
+    public BaseFactorialMetricsImpl() {
+        getLogger().debug("Initializing base factorial metrics...");
+    }
+
+    @Override
+    public long numOfFactors(final T value, final Counter<T> counter) {
+        return counter.count(value);
+    }
 }

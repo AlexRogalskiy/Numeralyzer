@@ -24,31 +24,35 @@
 
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.Matchable;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.Numerable;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 /**
  * Abstract base metrics class with default implementation
  *
- * @param <T>
- * @param <E>
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-public abstract class ABaseMetricsImpl<T, E> implements Matchable<T>, Numerable<T, E> {
+public abstract class ABaseMetricsImpl {
 
     /**
      * Default logger instance
      */
     protected final Logger LOGGER = LogManager.getLogger(getClass());
 
+    /**
+     * Default constructor
+     */
     public ABaseMetricsImpl() {
         getLogger().debug("Initializing base metrics...");
     }
 
+    /**
+     * Returns logger instance
+     *
+     * @return logger instance
+     */
     public Logger getLogger() {
         return LOGGER;
     }

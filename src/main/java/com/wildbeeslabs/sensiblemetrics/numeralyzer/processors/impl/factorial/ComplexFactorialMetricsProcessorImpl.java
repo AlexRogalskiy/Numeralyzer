@@ -40,6 +40,9 @@ import java.util.Objects;
 @ToString(callSuper = true)
 public class ComplexFactorialMetricsProcessorImpl extends BaseFactorialMetricsProcessorImpl<Long, Long, ComplexFactorialMetricsImpl> {
 
+    /**
+     * Default constructor
+     */
     public ComplexFactorialMetricsProcessorImpl() {
         getLogger().debug("Initializing complex factorial metrics processor...");
     }
@@ -55,7 +58,7 @@ public class ComplexFactorialMetricsProcessorImpl extends BaseFactorialMetricsPr
         if (Objects.isNull(value) || value < 0) {
             return getDefaultResult();
         }
-        return this.getMetrics().trailingZeros(value);
+        return this.getMetrics().numOfTrailingZeros(value);
     }
 
     @Override

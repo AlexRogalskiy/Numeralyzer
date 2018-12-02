@@ -23,13 +23,11 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.factorial;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IFactorialMetrics;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.GenericMetricsImpl;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Default simple factorial metrics implementation
+ * Simple factorial metrics implementation
  *
  * @author Alex
  * @version 1.0.0
@@ -37,14 +35,17 @@ import lombok.ToString;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class SimpleFactorialMetricsImpl extends GenericMetricsImpl<Integer, Long> implements IFactorialMetrics<Integer, Long> {
+public class SimpleFactorialMetricsImpl extends BaseFactorialMetricsImpl<Integer, Long> {
 
+    /**
+     * Default constructor
+     */
     public SimpleFactorialMetricsImpl() {
         getLogger().debug("Initializing simple factorial metrics...");
     }
 
     @Override
-    public Long trailingZeros(final Integer value) {
+    public long numOfTrailingZeros(final Integer value) {
         long count = 0, temp = value;
         while (temp > 0) {
             temp /= DIVISOR_5;

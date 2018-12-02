@@ -35,5 +35,11 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.functions;
 @FunctionalInterface
 public interface Generator<T, E> {
 
+    /**
+     * Returns produced value by initial input
+     *
+     * @param value - initial input
+     * @return value produced from the initial input
+     */
     E produce(final T value);
 }

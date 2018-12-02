@@ -23,16 +23,25 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors;
 
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IFactorialMetrics;
+
 /**
  * Factorial metrics processor declaration
  *
  * @param <T>
  * @param <E>
+ * @param <R>
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-public interface IFactorialMetricsProcessor<T, E> extends IGenericMetricsProcessor<T, E> {
+public interface IFactorialMetricsProcessor<T, E, R extends IFactorialMetrics<T, E>> extends IGenericMetricsProcessor<T, E, R> {
 
+    /**
+     * Returns number of trailing zeros by input factorized value
+     *
+     * @param value - input value to be processed
+     * @return number of trailing zeros
+     */
     E countTrailingZeros(T value);
 }

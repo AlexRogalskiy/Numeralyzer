@@ -30,8 +30,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.util.Collections;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -56,9 +57,14 @@ public class DelegatedCache<K, V> implements ICache<K, V> {
      * Default cache initial size
      */
     public static final int DEFAULT_CACHE_INITIAL_SIZE = 100;
-
+    /**
+     * Default map based cache instance
+     */
     private final Map<K, V> cacheMap;
 
+    /**
+     * Default constructor
+     */
     public DelegatedCache() {
         this.cacheMap = new ConcurrentHashMap<>(DEFAULT_CACHE_INITIAL_SIZE);
     }
@@ -66,21 +72,14 @@ public class DelegatedCache<K, V> implements ICache<K, V> {
     @Override
     public V load(final K key, final V defaultValue) {
         LOGGER.debug(String.format("DelegatedCache: loading key: {%s}", key));
-        if (!this.cacheMap.containsKey(key)) {
-            this.cacheMap.put(key, defaultValue);
-        }
-        return this.cacheMap.get(key);
+        return this.cacheMap.putIfAbsent(key, defaultValue);
     }
 
     @Override
     public Map<K, V> loadAll(final Iterable<? extends K> iterable, final V defaultValue) {
         LOGGER.debug(String.format("DelegatedCache: loading all keys: {%s}", StringUtils.join(iterable, "|")));
         this.cacheMap.clear();
-        if (Objects.nonNull(iterable)) {
-            for (final K key : iterable) {
-                load(key, defaultValue);
-            }
-        }
+        Optional.ofNullable(iterable).orElse(Collections.emptyList()).forEach(key -> load((K) key, defaultValue));
         return this.cacheMap;
     }
 
@@ -93,11 +92,19 @@ public class DelegatedCache<K, V> implements ICache<K, V> {
     @Override
     public void writeAll(final Iterable<? extends Map.Entry<? extends K, ? extends V>> iterable) {
         LOGGER.debug(String.format("DelegatedCache: writing all entries: {%s}", StringUtils.join(iterable, "|"), iterable));
-        if (Objects.nonNull(iterable)) {
-            for (Map.Entry<? extends K, ? extends V> entry : iterable) {
-                write(entry.getKey(), entry.getValue());
-            }
-        }
+        Optional.ofNullable(iterable).orElse(Collections.emptyList()).forEach(entry -> write(entry.getKey(), entry.getValue()));
+    }
+
+    @Override
+    public boolean contains(final K key) {
+        LOGGER.debug(String.format("DelegatedCache: checking existence of value by key: {%s}", key));
+        return this.cacheMap.containsKey(key);
+    }
+
+    @Override
+    public V read(final K key) {
+        LOGGER.debug(String.format("DelegatedCache: getting value by key: {%s}", key));
+        return this.cacheMap.get(key);
     }
 
     @Override
@@ -109,10 +116,6 @@ public class DelegatedCache<K, V> implements ICache<K, V> {
     @Override
     public void deleteAll(final Iterable<? extends K> iterable) {
         LOGGER.debug(String.format("DelegatedCache: deleting all keys: {%s}", StringUtils.join(iterable, "|")));
-        if (Objects.nonNull(iterable)) {
-            for (final K key : iterable) {
-                delete(key);
-            }
-        }
+        Optional.ofNullable(iterable).orElse(Collections.emptyList()).forEach(key -> delete((K) key));
     }
 }

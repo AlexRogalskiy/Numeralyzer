@@ -24,21 +24,21 @@
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.functions;
 
 /**
- * Matcher interface declaration
+ * Counter interface declaration
  *
  * @param <T>
- * @author Alex
- * @version 1.0.0
+ * @author alexander.rogalskiy
+ * @version 1.0
  * @since 2018-11-30
  */
 @FunctionalInterface
-public interface Matcher<T> {
+public interface Counter<T> {
 
     /**
-     * Returns matched value by initial input
+     * Returns countered value by initial input
      *
      * @param value - initial input
-     * @return true - if the input value is matched, false - otherwise
+     * @return value countered from the initial input
      */
-    boolean matches(final T value);
+    long count(final T value);
 }

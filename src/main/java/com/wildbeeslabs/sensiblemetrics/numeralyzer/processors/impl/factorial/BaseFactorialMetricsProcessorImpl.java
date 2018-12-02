@@ -38,8 +38,11 @@ import lombok.ToString;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public abstract class BaseFactorialMetricsProcessorImpl<T, E, R extends IFactorialMetrics<T, E>> extends GenericMetricsProcessorImpl<T, E, R> implements IFactorialMetricsProcessor<T, E> {
+public abstract class BaseFactorialMetricsProcessorImpl<T, E, R extends IFactorialMetrics<T, E>> extends GenericMetricsProcessorImpl<T, E, R> implements IFactorialMetricsProcessor<T, E, R> {
 
+    /**
+     * Default constructor
+     */
     public BaseFactorialMetricsProcessorImpl() {
         getLogger().debug("Initializing base factorial metrics processor ...");
     }

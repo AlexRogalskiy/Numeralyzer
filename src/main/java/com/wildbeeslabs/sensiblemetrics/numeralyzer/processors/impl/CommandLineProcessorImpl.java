@@ -55,18 +55,18 @@ public class CommandLineProcessorImpl extends ABaseProcessorImpl implements ICom
     /**
      * Default verbose mode
      */
-    public static final String DEFAULT_VERBOSE_MODE = "auto";
+    public static final VerboseMode DEFAULT_VERBOSE_MODE = VerboseMode.AUTO;
     /**
      * Default verbose mode list
      */
-    public static final List<String> DEFAULT_VERBOSE_MODE_LIST = Arrays.asList("auto", "short", "full");
+    public static final List<VerboseMode> DEFAULT_VERBOSE_MODE_LIST = Arrays.asList(VerboseMode.values());
     /**
      * Error status flag
      */
     private boolean errorFlag = true;
 
     @Option(name = "-v", aliases = {"--mode"}, usage = "sets verbose mode {auto | short | full}", metaVar = "VERBOSE MODE", handler = StringOptionHandler.class)
-    private String mode;
+    private VerboseMode mode;
     @Option(name = "-in", aliases = {"--input-source"}, required = true, usage = "sets input source", metaVar = "INPUT SOURCE")
     private File inputSource;
     @Option(name = "-out", aliases = {"--output-source"}, required = true, usage = "sets output source", metaVar = "OUTPUT SOURCE")
@@ -76,6 +76,11 @@ public class CommandLineProcessorImpl extends ABaseProcessorImpl implements ICom
 
     private final CmdLineParser parser;
 
+    /**
+     * Constructor with array of input arguments
+     *
+     * @param args - array of input arguments
+     */
     public CommandLineProcessorImpl(final String... args) {
         this.parser = new CmdLineParser(this);
         this.initialize(args);
@@ -101,7 +106,7 @@ public class CommandLineProcessorImpl extends ABaseProcessorImpl implements ICom
             if (!DEFAULT_VERBOSE_MODE_LIST.contains(this.getMode())) {
                 throw new CmdLineException(this.parser, String.format("Invalid argument: --mode is not a valid verbose mode [ requires {%s}", StringUtils.join(DEFAULT_VERBOSE_MODE_LIST, "|")), null);
             }
-            this.mode = this.mode.toLowerCase();
+            //this.mode = this.mode.toLowerCase();
         }
     }
 

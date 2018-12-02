@@ -34,5 +34,11 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics;
  */
 public interface Numerable<T, E> {
 
+    /**
+     * Returns calculated value of applied numerable procedure
+     *
+     * @param value - input value
+     * @return calculated value
+     */
     E numerate(final T value);
 }

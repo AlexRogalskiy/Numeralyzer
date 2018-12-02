@@ -35,5 +35,11 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.functions;
 @FunctionalInterface
 public interface Numerator<T, E> {
 
+    /**
+     * Returns numerated value by initial input
+     *
+     * @param value - initial input
+     * @return value numerated from the initial input
+     */
     E numerate(final T value);
 }

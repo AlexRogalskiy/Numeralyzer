@@ -51,11 +51,10 @@ public abstract class ABaseProcessorImpl implements IBaseProcessor {
      * Default logger instance
      */
     protected final Logger LOGGER = LogManager.getLogger(getClass());
-    /**
-     * Default stream delimiter
-     */
-    public static final String DEFAULT_TOKEN_DELIMITER = "[,./?;:!-\"\\s]+?";
 
+    /**
+     * Default constructor
+     */
     public ABaseProcessorImpl() {
         getLogger().debug("Initializing base processor ...");
     }
@@ -67,6 +66,11 @@ public abstract class ABaseProcessorImpl implements IBaseProcessor {
                 .map(item -> (E) item);
     }
 
+    /**
+     * Returns logger instance
+     *
+     * @return logger instance
+     */
     protected Logger getLogger() {
         return this.LOGGER;
     }

@@ -23,16 +23,13 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.factorial;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IFactorialMetrics;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.GenericMetricsImpl;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.cache.ICache;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.cache.impl.DelegatedCache;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * Default complex factorial metrics implementation
+ * Complex factorial metrics implementation
  *
  * @author Alex
  * @version 1.0.0
@@ -40,22 +37,25 @@ import java.util.Map;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class ComplexFactorialMetricsImpl extends GenericMetricsImpl<Long, Long> implements IFactorialMetrics<Long, Long> {
+public class ComplexFactorialMetricsImpl extends BaseFactorialMetricsImpl<Long, Long> {
 
     /**
      * Default counting maps
      */
-    private final Map<Long, Long> mapOfTwo;
-    private final Map<Long, Long> mapOfFive;
+    private final ICache<Long, Long> mapOfTwo;
+    private final ICache<Long, Long> mapOfFive;
 
+    /**
+     * Default constructor
+     */
     public ComplexFactorialMetricsImpl() {
         getLogger().debug("Initializing complex factorial metrics...");
-        this.mapOfTwo = new HashMap<>();
-        this.mapOfFive = new HashMap<>();
+        this.mapOfTwo = new DelegatedCache<>();
+        this.mapOfFive = new DelegatedCache<>();
     }
 
     @Override
-    public Long trailingZeros(final Long value) {
+    public long numOfTrailingZeros(final Long value) {
         long temp = value;
         if (temp < DIVISOR_5) {
             return 0L;
@@ -73,7 +73,7 @@ public class ComplexFactorialMetricsImpl extends GenericMetricsImpl<Long, Long> 
         return (countFive < countTwo) ? countFive : countTwo;
     }
 
-    private long countExistance(long n, long m, Map<Long, Long> map) {
+    private long countExistance(long n, long m, ICache<Long, Long> map) {
         long temp = n;
         long count = 0;
         double num = (double) n;
@@ -81,13 +81,13 @@ public class ComplexFactorialMetricsImpl extends GenericMetricsImpl<Long, Long> 
             count++;
             n = n / m;
             num = (double) n;
-            if (map.containsKey(n)) {
-                count += map.get(n);
+            if (map.contains(n)) {
+                count += map.read(n);
                 break;
             }
         }
-        if (!map.containsKey(temp)) {
-            map.put(temp, count);
+        if (!map.contains(temp)) {
+            map.write(temp, count);
         }
         return count;
     }
