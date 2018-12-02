@@ -1,7 +1,7 @@
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics;
 
 /**
- * Default numerable interface
+ * Default numerable interface declaration
  *
  * @param <T>
  * @param <E>

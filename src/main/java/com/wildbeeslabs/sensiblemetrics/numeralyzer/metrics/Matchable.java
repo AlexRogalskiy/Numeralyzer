@@ -24,7 +24,7 @@
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics;
 
 /**
- * Default matchable interface
+ * Default matchable interface declaration
  *
  * @param <T>
  * @author Alex
