@@ -21,16 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl;
-
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.Matchable;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.Numerable;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors;
 
 /**
- * Abstract base metrics class with default implementation
+ * Generic metrics processor declaration
  *
  * @param <T>
  * @param <E>
@@ -38,18 +32,5 @@ import org.apache.log4j.Logger;
  * @version 1.0
  * @since 2018-11-30
  */
-public abstract class ABaseMetricsImpl<T, E> implements Matchable<T>, Numerable<T, E> {
-
-    /**
-     * Default logger instance
-     */
-    protected final Logger LOGGER = LogManager.getLogger(getClass());
-
-    public ABaseMetricsImpl() {
-        getLogger().debug("Initializing base metrics...");
-    }
-
-    public Logger getLogger() {
-        return LOGGER;
-    }
+public interface IGenericMetricsProcessor<T, E> extends IBaseProcessor {
 }

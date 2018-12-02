@@ -21,57 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.factorial;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IGenericMetrics;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IFactorialMetrics;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.GenericMetricsImpl;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
- * Factorial complex processor implementation
+ * Default complex factorial metrics implementation
  *
- * @author alexander.rogalskiy
- * @version 1.0
- * @since 2018-11-30
+ * @author Alex
+ * @version 1.0.0
+ * @since 2017-08-07
  */
-public class FactorialComplexProcessorImpl extends GenericFactorialProcessorImpl<Long, Long> {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class ComplexFactorialMetricsImpl extends GenericMetricsImpl<Long, Long> implements IFactorialMetrics<Long, Long> {
 
     /**
-     * Default count numeric maps
+     * Default counting maps
      */
     private final Map<Long, Long> mapOfTwo;
     private final Map<Long, Long> mapOfFive;
 
-    public FactorialComplexProcessorImpl(final IGenericMetrics<Long, Long> metrics) {
-        super(metrics);
-        getLogger().debug("Initializing factorial numeric complex processor ...");
+    public ComplexFactorialMetricsImpl() {
+        getLogger().debug("Initializing complex factorial metrics...");
         this.mapOfTwo = new HashMap<>();
         this.mapOfFive = new HashMap<>();
     }
 
-    /**
-     * Returns trailing 0s in a factorial of value
-     *
-     * @param value - value to be factorized
-     * @return number of trailing zeros
-     */
     @Override
-    public Long countTrailingZeros(Long value) {
-        if (Objects.isNull(value) || value < 0) {
-            return DEFAULT_EMPTY_RESULT;
-        }
-        return this.trailingZeros(value);
-    }
-
-    private long trailingZeros(long n) {
-        if (n < DIVISOR_5) {
-            return 0;
+    public Long trailingZeros(final Long value) {
+        long temp = value;
+        if (temp < DIVISOR_5) {
+            return 0L;
         }
         long countFive = 0;
         long countTwo = 0;
-        for (int i = 1; i <= n; i++) {
+        for (int i = 1; i <= temp; i++) {
             if (i % DIVISOR_2 == 0) {
                 countTwo += this.countExistance(i, DIVISOR_2, this.mapOfTwo);
             }

@@ -28,8 +28,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
@@ -50,14 +48,10 @@ import java.util.Objects;
  * @since 2018-11-30
  */
 @Data
-@EqualsAndHashCode
-@ToString
-public class CommandLineProcessor implements ICommandLineProcessor {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class CommandLineProcessorImpl extends ABaseProcessorImpl implements ICommandLineProcessor {
 
-    /**
-     * Default logger instance
-     */
-    private static final Logger LOGGER = LogManager.getLogger(CommandLineProcessor.class);
     /**
      * Default verbose mode
      */
@@ -80,9 +74,9 @@ public class CommandLineProcessor implements ICommandLineProcessor {
     @Option(name = "-i", aliases = {"--ignore-case"}, usage = "enables/disables ignore case mode", metaVar = "IGNORE CASE MODE", handler = ExplicitBooleanOptionHandler.class)
     private boolean ignoreCase;
 
-    private CmdLineParser parser;
+    private final CmdLineParser parser;
 
-    public CommandLineProcessor(final String... args) {
+    public CommandLineProcessorImpl(final String... args) {
         this.parser = new CmdLineParser(this);
         this.initialize(args);
     }

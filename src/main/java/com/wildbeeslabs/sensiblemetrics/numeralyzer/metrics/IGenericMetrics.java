@@ -33,10 +33,4 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics;
  * @since 2018-11-30
  */
 public interface IGenericMetrics<T, E> {
-
-    double getCoefficientA();
-
-    double getCoefficientB();
-
-    double getCoefficientC();
 }

@@ -24,43 +24,36 @@
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl;
 
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IGenericMetrics;
-
-import java.util.Objects;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IGenericMetricsProcessor;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Factorial processor implementation
+ * gAbstract class with Generic metrics processor implementation
  *
+ * @param <T>
+ * @param <E>
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-public class FactorialProcessorImpl extends GenericFactorialProcessorImpl<Integer, Long> {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public abstract class GenericMetricsProcessorImpl<T, E, R extends IGenericMetrics<T, E>> extends ABaseProcessorImpl implements IGenericMetricsProcessor<T, E> {
 
-    public FactorialProcessorImpl(final IGenericMetrics<Integer, Long> metrics) {
-        super(metrics);
-        getLogger().debug("Initializing factorial numeric processor ...");
+    private R metrics;
+
+    public GenericMetricsProcessorImpl() {
+        getLogger().debug("Initializing generic metrics processor ...");
     }
 
-    /**
-     * Returns trailing 0s in a factorial of value
-     *
-     * @param value - value to be factorized
-     * @return number of trailing zeros
-     */
-    @Override
-    public Long countTrailingZeros(Integer value) {
-        if (Objects.isNull(value) || value < 0) {
-            return DEFAULT_EMPTY_RESULT;
-        }
-        return this.trailingZeros(value);
+    protected R getMetrics() {
+        return metrics;
     }
 
-    private long trailingZeros(int num) {
-        int count = 0;
-        while (num > 0) {
-            num /= DIVISOR_5;
-            count += num;
-        }
-        return count;
+    public void setMetrics(final R metrics) {
+        this.metrics = metrics;
     }
+
+    protected abstract E getDefaultResult();
 }

@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 WildBees Labs.
+ * Copyright 2018 WildBees Labs.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,57 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.dispatcher;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.factorial;
 
-import lombok.Data;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IFactorialMetrics;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.GenericMetricsImpl;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-
-import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.RecursiveAction;
 
 /**
- * Delegated recursive action implementation
+ * Default standard factorial metrics implementation
  *
- * @param <T>
- * @param <U>
  * @author Alex
  * @version 1.0.0
- * @since 2018-11-30
+ * @since 2017-08-07
  */
-@Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public abstract class DelegatedRecursiveAction<T, U extends DelegatedRecursiveAction<T, U>> extends RecursiveAction {
+public class StandardFactorialMetricsImpl extends GenericMetricsImpl<Integer, Integer> implements IFactorialMetrics<Integer, Integer> {
 
-    /**
-     * Default Logger instance
-     */
-    protected final Logger LOGGER = LogManager.getLogger(this.getClass());
-
-    private final T value;
-
-    public DelegatedRecursiveAction(final T value) {
-        this.value = value;
+    public StandardFactorialMetricsImpl() {
+        getLogger().debug("Initializing standard factorial metrics...");
     }
 
     @Override
-    protected void compute() {
-        if (this.validateCondition()) {
-            DelegatedDispatcher.forkJoinPool.invokeAll(this.createSubtasks());
-        } else {
-            this.processing(this.value);
+    public Integer trailingZeros(final Integer value) {
+        int countOfZeros = 0, temp = value;
+        for (int i = 2; i <= temp; i++) {
+            countOfZeros += countFactorsOf5(i);
         }
+        return countOfZeros;
     }
 
-    protected abstract List<? extends Callable<U>> createSubtasks();
-
-    protected abstract boolean validateCondition();
-
-    protected void processing(final T value) {
-        LOGGER.info(String.format("The result=(%s) was processed by thread=(%s)", value, Thread.currentThread().getName()));
+    protected int countFactorsOf5(int value) {
+        int count = 0;
+        while (value % DIVISOR_5 == 0) {
+            count++;
+            value /= DIVISOR_5;
+        }
+        return count;
     }
 }

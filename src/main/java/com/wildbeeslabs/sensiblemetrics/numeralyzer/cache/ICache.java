@@ -21,35 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.dispatcher;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.cache;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-
-import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.ForkJoinTask;
+import java.io.Serializable;
+import java.util.Map;
 
 /**
- * Generic dispatcher implementation
+ * Cache interface declaration
  *
- * @author Alex
- * @version 1.0.0
+ * @param <K>
+ * @param <V>
+ * @author alexander.rogalskiy
+ * @version 1.0
  * @since 2018-11-30
  */
-public class GenericDispatcher {
+public interface ICache<K, V> extends Serializable {
 
-    /**
-     * Default Logger instance
-     */
-    protected final Logger LOGGER = LogManager.getLogger(this.getClass());
-    /**
-     * Default fork join pool
-     */
-    public static final ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();//new ForkJoinPool(2);
+    V load(K key, V defaultValue);
 
-    public static <R> R execute(final ForkJoinTask<R> task) {
-        GenericDispatcher.forkJoinPool.execute(task);
-        return task.join();
-        //CPoolUtils.forkJoinPool.invoke(task);
-    }
+    Map<K, V> loadAll(Iterable<? extends K> iterable, V defaultValue);
+
+    void write(K key, V value);
+
+    void writeAll(Iterable<? extends Map.Entry<? extends K, ? extends V>> iterable);
+
+    void delete(K key);
+
+    void deleteAll(Iterable<? extends K> iterable);
 }

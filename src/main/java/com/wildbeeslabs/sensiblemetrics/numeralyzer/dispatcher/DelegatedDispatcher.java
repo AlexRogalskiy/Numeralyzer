@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2018 WildBees Labs.
+ * Copyright 2017 WildBees Labs.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,35 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.dispatcher;
 
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl;
-
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.Matchable;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.Numerable;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinTask;
+
 /**
- * Abstract base metrics class with default implementation
+ * Delegated dispatcher implementation
  *
- * @param <T>
- * @param <E>
- * @author alexander.rogalskiy
- * @version 1.0
+ * @author Alex
+ * @version 1.0.0
  * @since 2018-11-30
  */
-public abstract class ABaseMetricsImpl<T, E> implements Matchable<T>, Numerable<T, E> {
+public class DelegatedDispatcher {
 
     /**
-     * Default logger instance
+     * Default Logger instance
      */
-    protected final Logger LOGGER = LogManager.getLogger(getClass());
+    protected final Logger LOGGER = LogManager.getLogger(this.getClass());
+    /**
+     * Default fork join pool
+     */
+    public static final ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();//new ForkJoinPool(2);
 
-    public ABaseMetricsImpl() {
-        getLogger().debug("Initializing base metrics...");
-    }
-
-    public Logger getLogger() {
-        return LOGGER;
+    public static <R> R execute(final ForkJoinTask<R> task) {
+        DelegatedDispatcher.forkJoinPool.execute(task);
+        return task.join();
+        //CPoolUtils.forkJoinPool.invoke(task);
     }
 }

@@ -21,35 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.factorial;
 
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl;
-
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.Matchable;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.Numerable;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IFactorialMetrics;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IFactorialMetricsProcessor;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.GenericMetricsProcessorImpl;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Abstract base metrics class with default implementation
+ * Base factorial metrics processor implementation
  *
- * @param <T>
- * @param <E>
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-public abstract class ABaseMetricsImpl<T, E> implements Matchable<T>, Numerable<T, E> {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public abstract class BaseFactorialMetricsProcessorImpl<T, E, R extends IFactorialMetrics<T, E>> extends GenericMetricsProcessorImpl<T, E, R> implements IFactorialMetricsProcessor<T, E> {
 
-    /**
-     * Default logger instance
-     */
-    protected final Logger LOGGER = LogManager.getLogger(getClass());
-
-    public ABaseMetricsImpl() {
-        getLogger().debug("Initializing base metrics...");
-    }
-
-    public Logger getLogger() {
-        return LOGGER;
+    public BaseFactorialMetricsProcessorImpl() {
+        getLogger().debug("Initializing base factorial metrics processor ...");
     }
 }

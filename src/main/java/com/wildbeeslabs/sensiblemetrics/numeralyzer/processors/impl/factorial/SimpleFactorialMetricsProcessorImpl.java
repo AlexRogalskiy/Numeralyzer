@@ -21,35 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.factorial;
 
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.factorial.SimpleFactorialMetricsImpl;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.Matchable;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.Numerable;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import java.util.Objects;
 
 /**
- * Abstract base metrics class with default implementation
+ * Simple factorial metrics processor implementation
  *
- * @param <T>
- * @param <E>
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-public abstract class ABaseMetricsImpl<T, E> implements Matchable<T>, Numerable<T, E> {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class SimpleFactorialMetricsProcessorImpl extends BaseFactorialMetricsProcessorImpl<Integer, Long, SimpleFactorialMetricsImpl> {
 
-    /**
-     * Default logger instance
-     */
-    protected final Logger LOGGER = LogManager.getLogger(getClass());
-
-    public ABaseMetricsImpl() {
-        getLogger().debug("Initializing base metrics...");
+    public SimpleFactorialMetricsProcessorImpl() {
+        getLogger().debug("Initializing simple factorial metrics processor...");
     }
 
-    public Logger getLogger() {
-        return LOGGER;
+    /**
+     * Returns trailing zeros in a factorial of input value
+     *
+     * @param value - value to be factorized
+     * @return number of trailing zeros
+     */
+    @Override
+    public Long countTrailingZeros(Integer value) {
+        if (Objects.isNull(value) || value < 0) {
+            return getDefaultResult();
+        }
+        return this.getMetrics().trailingZeros(value);
+    }
+
+    @Override
+    protected Long getDefaultResult() {
+        return Long.valueOf(0);
     }
 }

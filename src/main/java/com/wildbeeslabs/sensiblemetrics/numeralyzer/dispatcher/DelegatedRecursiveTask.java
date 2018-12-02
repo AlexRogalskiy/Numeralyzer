@@ -63,7 +63,7 @@ public abstract class DelegatedRecursiveTask<T, R, U extends DelegatedRecursiveT
     @Override
     protected R compute() {
         if (this.validateCondition()) {
-            return GenericDispatcher.forkJoinPool.invokeAll(this.createSubtasks()).stream().map(e -> {
+            return DelegatedDispatcher.forkJoinPool.invokeAll(this.createSubtasks()).stream().map(e -> {
                 try {
                     return e.get();
                 } catch (InterruptedException | ExecutionException ex) {

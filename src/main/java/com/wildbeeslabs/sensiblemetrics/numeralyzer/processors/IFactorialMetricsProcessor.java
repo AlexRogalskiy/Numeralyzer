@@ -24,7 +24,7 @@
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors;
 
 /**
- * Factorial processor declaration
+ * Factorial metrics processor declaration
  *
  * @param <T>
  * @param <E>
@@ -32,7 +32,7 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors;
  * @version 1.0
  * @since 2018-11-30
  */
-public interface IGenericFactorialProcessor<T, E> extends IBaseProcessor<T, E> {
+public interface IFactorialMetricsProcessor<T, E> extends IGenericMetricsProcessor<T, E> {
 
     E countTrailingZeros(T value);
 }

@@ -23,9 +23,10 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IGenericFactorialProcessor;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.CommandLineProcessor;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.FactorialProcessorImpl;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.ICommandLineProcessor;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IFactorialMetricsProcessor;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.CommandLineProcessorImpl;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.factorial.SimpleFactorialMetricsProcessorImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -45,10 +46,10 @@ public class NumericAnalyzer {
 
     public void init(final String... args) {
         LOGGER.info("Initializing command line processor...");
-        final CommandLineProcessor cmdProcessor = new CommandLineProcessor(args);
-        LOGGER.info("Initializing numeric analyzer...");
+        final ICommandLineProcessor commandLineProcessor = new CommandLineProcessorImpl(args);
 
-        final IGenericFactorialProcessor<Integer, Long> analyzer = new FactorialProcessorImpl(null);
-        analyzer.countTrailingZeros(-59);
+        LOGGER.info("Initializing factorial simple metrics processor...");
+        final IFactorialMetricsProcessor<Integer, Long> metricsProcessor = new SimpleFactorialMetricsProcessorImpl();
+        metricsProcessor.countTrailingZeros(-59);
     }
 }

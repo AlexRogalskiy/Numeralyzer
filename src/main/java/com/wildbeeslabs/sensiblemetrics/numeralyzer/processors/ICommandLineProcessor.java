@@ -26,13 +26,13 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors;
 import java.io.File;
 
 /**
- * Command line processor declaration
+ * Command line processor interface declaration
  *
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-public interface ICommandLineProcessor {
+public interface ICommandLineProcessor extends IBaseProcessor {
 
     String getMode();
 

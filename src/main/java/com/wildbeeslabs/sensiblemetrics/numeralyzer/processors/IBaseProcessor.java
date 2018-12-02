@@ -26,13 +26,11 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors;
 /**
  * Base processor declaration
  *
- * @param <T>
- * @param <E>
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-public interface IBaseProcessor<T, E> {
+public interface IBaseProcessor {
 
     //void process(int i);
 }
