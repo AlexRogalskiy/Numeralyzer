@@ -7,7 +7,7 @@ The Numeric analyzer
 mvn clean compile assembly:single
 ```
 
-***Technical description***
+***Technical description:***
 
 Write a program that will calculate the number of trailing zeros in a factorial of a given number.
 
@@ -33,4 +33,4 @@ zeros(12) = 2
 # 12! = 479001600 --> 2 trailing zeros
 ```
 
-Hint: You're not meant to calculate the factorial. Find another way to find the number of zeros.
+*Hint: You're not meant to calculate the factorial. Find another way to find the number of zeros.*
