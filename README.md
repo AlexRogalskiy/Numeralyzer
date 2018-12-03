@@ -1,11 +1,5 @@
-# Numeralizer
+# Numeralyzer
 The Numeric analyzer
-
-***How to build the application:***
-
-```aidl
-mvn clean compile assembly:single
-```
 
 ***Technical description:***
 
@@ -31,6 +25,18 @@ zeros(6) = 1
 zeros(12) = 2
 
 # 12! = 479001600 --> 2 trailing zeros
+```
+
+***Installation:***
+
+Package the application with all the dependencies:
+```aidl
+mvn clean compile assembly:single
+```
+
+Start the application:
+```aidl
+run.bat
 ```
 
 *Hint: You're not meant to calculate the factorial. Find another way to find the number of zeros.*
