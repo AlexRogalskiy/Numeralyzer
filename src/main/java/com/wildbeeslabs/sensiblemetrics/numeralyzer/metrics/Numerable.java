@@ -26,8 +26,8 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics;
 /**
  * Default numerable interface declaration
  *
- * @param <T>
- * @param <E>
+ * @param <T> - {@link Object}
+ * @param <E> - {@link Object}
  * @author Alex
  * @version 1.0.0
  * @since 2018-11-30

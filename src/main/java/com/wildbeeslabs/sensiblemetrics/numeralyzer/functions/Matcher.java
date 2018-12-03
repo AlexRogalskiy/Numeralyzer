@@ -26,7 +26,7 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.functions;
 /**
  * Matcher interface declaration
  *
- * @param <T>
+ * @param <T> - {@link Object}
  * @author Alex
  * @version 1.0.0
  * @since 2018-11-30

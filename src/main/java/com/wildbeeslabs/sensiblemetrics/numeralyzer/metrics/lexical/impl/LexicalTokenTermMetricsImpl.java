@@ -25,6 +25,7 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.lexical.impl;
 
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalTokenTerm;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.functions.Numerator;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.GenericMetricsImpl;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.lexical.ILexicalTokenTermMetrics;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.utils.ConverterUtils;
@@ -32,19 +33,22 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.util.IntSummaryStatistics;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
  * Lexical token metrics implementation
  *
+ * @param <S> - {@link CharSequence}
+ * @param <M> - {@link IGenericLexicalToken}
+ * @param <T> - {@link IGenericLexicalTokenTerm}
+ * @param <E> - {@link Object}
  * @author Alex
  * @version 1.0.0
  * @since 2018-11-30
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class LexicalTokenTermMetricsImpl<T extends IGenericLexicalTokenTerm<IGenericLexicalToken<CharSequence>>, E> extends GenericMetricsImpl<T, E> implements ILexicalTokenTermMetrics<T, E> {
+public class LexicalTokenTermMetricsImpl<S extends CharSequence, M extends IGenericLexicalToken<S>, T extends IGenericLexicalTokenTerm<S, M>, E> extends GenericMetricsImpl<T, E> implements ILexicalTokenTermMetrics<S, M, T, E> {
 
     /**
      * Default constructor
@@ -53,17 +57,36 @@ public class LexicalTokenTermMetricsImpl<T extends IGenericLexicalTokenTerm<IGen
         getLogger().debug("Initializing lexical token term metrics...");
     }
 
+    /**
+     * Returns summary statistics of the current input term
+     *
+     * @param value - input term
+     * @return summary statistics
+     */
     @Override
     public IntSummaryStatistics getStatistics(final T value) {
         return value.getTokens().stream().collect(Collectors.summarizingInt((token) -> token.length()));
     }
 
+    /**
+     * Returns average tokens length of the current input term
+     *
+     * @param value - input term
+     * @return average tokens length
+     */
     @Override
     public double getAverageTokenLength(final T value) {
         return value.getTokens().stream().mapToInt((token) -> token.length()).average().getAsDouble();
     }
 
-    protected int count(final T value, final Function<IGenericLexicalToken<CharSequence>, Integer> mapper) {
+    /**
+     * Returns number of tokens of the current input term counted by input mapper function
+     *
+     * @param value  input term
+     * @param mapper mapper function
+     * @return number of tokens in the term
+     */
+    protected int count(final T value, final Numerator<M, Integer> mapper) {
         return ConverterUtils.reduceStreamBy(value.getTokens().stream().map(mapper), 0, (i1, i2) -> (i1 + i2));
     }
 }

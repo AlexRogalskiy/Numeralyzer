@@ -26,7 +26,10 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.impl;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalTokenTerm;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.utils.ConverterUtils;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,23 +39,34 @@ import java.util.Objects;
 /**
  * Abstract generic lexical token term class to store information on a collection of data chunks
  *
- * @param <T>
+ * @param <S> - {@link CharSequence}
+ * @param <T> - {@link IGenericLexicalToken}
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-@Data
 @EqualsAndHashCode
 @ToString
-public abstract class GenericLexicalTokenTermImpl<T extends IGenericLexicalToken<CharSequence>> implements IGenericLexicalTokenTerm<T> {
+public abstract class GenericLexicalTokenTerm<S extends CharSequence, T extends IGenericLexicalToken<S>> implements IGenericLexicalTokenTerm<S, T> {
 
+    /**
+     * Collection of tokens
+     */
     @Setter(AccessLevel.NONE)
     protected final List<T> tokens;
 
-    public GenericLexicalTokenTermImpl() {
+    /**
+     * Default constructor
+     */
+    public GenericLexicalTokenTerm() {
         this.tokens = new ArrayList<>();
     }
 
+    /**
+     * Sets tokens from the input collection of tokens
+     *
+     * @param tokens - input collection of tokens
+     */
     @Override
     public void setTokens(final Collection<? extends T> tokens) {
         this.tokens.clear();
@@ -61,6 +75,11 @@ public abstract class GenericLexicalTokenTermImpl<T extends IGenericLexicalToken
         }
     }
 
+    /**
+     * Adds token to the current token term
+     *
+     * @param token - token to be stored
+     */
     @Override
     public void addToken(final T token) {
         if (Objects.nonNull(token)) {
@@ -68,6 +87,11 @@ public abstract class GenericLexicalTokenTermImpl<T extends IGenericLexicalToken
         }
     }
 
+    /**
+     * Removes token from the current token term
+     *
+     * @param token - token to be removed
+     */
     @Override
     public void removeToken(final T token) {
         if (Objects.nonNull(token)) {
@@ -75,11 +99,21 @@ public abstract class GenericLexicalTokenTermImpl<T extends IGenericLexicalToken
         }
     }
 
+    /**
+     * Returns size of the current token term
+     *
+     * @return size of the term
+     */
     @Override
     public int size() {
         return this.tokens.size();
     }
 
+    /**
+     * Returns formatted string of tokens in the current term
+     *
+     * @return formatted string of tokens
+     */
     public String toFormatString() {
         return ConverterUtils.joinWithPrefixPostfix(this.getTokens(), ", ", " [ ", " ] ");
     }

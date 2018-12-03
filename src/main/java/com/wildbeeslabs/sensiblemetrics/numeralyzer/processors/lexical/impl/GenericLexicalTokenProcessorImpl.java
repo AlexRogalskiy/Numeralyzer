@@ -24,33 +24,70 @@
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.lexical.impl;
 
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.functions.Filter;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.BaseProcessorImpl;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.lexical.IGenericLexicalTokenProcessor;
-import lombok.Data;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.utils.ConverterUtils;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
+import java.util.stream.Stream;
 
 /**
  * Generic lexical token class to process input char sequences
  *
+ * @param <T> - {@link CharSequence}
+ * @param <E> - {@link IGenericLexicalToken}
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-@Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class GenericLexicalTokenProcessorImpl<T extends CharSequence, E extends IGenericLexicalToken<T>> extends BaseProcessorImpl implements IGenericLexicalTokenProcessor<T, E> {
+public abstract class GenericLexicalTokenProcessorImpl<T extends CharSequence, E extends IGenericLexicalToken<T>> extends BaseProcessorImpl implements IGenericLexicalTokenProcessor<T, E> {
 
+    /**
+     * Default constructor
+     */
     public GenericLexicalTokenProcessorImpl() {
         getLogger().debug("Initializing generic lexical token processor...");
     }
 
-    protected Function<T, CharSequence> getDefaultFilter() {
+    @Override
+    public List<E> getLexicalTokens(final Stream<T> stream) {
+        return this.getLexicalTokenList(stream, this.getDefaultFilter(), DEFAULT_TOKEN_DELIMITER);
+    }
+
+    /**
+     * Returns lexical token list by input stream
+     *
+     * @param stream         - input stream
+     * @param tokenFilter    - token filter function
+     * @param tokenDelimiter - token delimiter
+     * @return lexical token list
+     */
+    protected List<E> getLexicalTokenList(final Stream<T> stream, final Filter<CharSequence, CharSequence> tokenFilter, final String tokenDelimiter) {
+        final Stream<T> filteredStream = ConverterUtils.getFilteredStream(stream, tokenFilter, tokenDelimiter);
+        return ConverterUtils.convertToList(filteredStream, (token) -> createLexicalToken(token));
+    }
+
+    /**
+     * Returns default token filter
+     *
+     * @return default token filter
+     */
+    protected Filter<CharSequence, CharSequence> getDefaultFilter() {
         return ((token) -> Optional.ofNullable(token).map(data -> data.toString().toLowerCase().trim()).orElse(StringUtils.EMPTY));
     }
+
+    /**
+     * Returns new lexical token with input value
+     *
+     * @param value - input value
+     * @return new lexical token
+     */
+    protected abstract E createLexicalToken(final T value);
 }

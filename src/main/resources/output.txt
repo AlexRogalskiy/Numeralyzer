@@ -1,6 +1,6 @@
-# 12! --> 2 trailing zeros
-# 12! --> 2 trailing zeros
-# 12! --> 2 trailing zeros
-# 12! --> 2 trailing zeros
-# 12! --> 2 trailing zeros
-# 12! --> 2 trailing zeros
+StringLexicalToken(super=GenericLexicalToken(id=424511b7-2481-4794-b84b-0f8c272c534d, comparator=com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken$LexicalTokenComparator@2437c6dc, data=80))
+StringLexicalToken(super=GenericLexicalToken(id=44aab548-c9d0-4eb1-bd89-5a7bff4d9bc4, comparator=com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken$LexicalTokenComparator@2437c6dc, data=80))
+StringLexicalToken(super=GenericLexicalToken(id=fc52ed03-0e29-4f16-85e4-e47e86f64644, comparator=com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken$LexicalTokenComparator@2437c6dc, data=80))
+StringLexicalToken(super=GenericLexicalToken(id=4843bf64-c828-4c4d-afb2-de3856bf205b, comparator=com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken$LexicalTokenComparator@2437c6dc, data=80))
+StringLexicalToken(super=GenericLexicalToken(id=3851aa4f-04e0-4a0a-bbd4-7157b7a2cca3, comparator=com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken$LexicalTokenComparator@2437c6dc, data=80))
+StringLexicalToken(super=GenericLexicalToken(id=b774675d-59d8-4d4c-920d-b999e3bc65ef, comparator=com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken$LexicalTokenComparator@2437c6dc, data=80))

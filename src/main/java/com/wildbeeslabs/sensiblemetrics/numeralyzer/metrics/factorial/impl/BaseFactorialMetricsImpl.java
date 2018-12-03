@@ -32,6 +32,8 @@ import lombok.ToString;
 /**
  * Base factorial metrics implementation
  *
+ * @param <T> - {@link Object}
+ * @param <E> - {@link Object}
  * @author Alex
  * @version 1.0.0
  * @since 2017-08-07

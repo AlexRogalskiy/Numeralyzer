@@ -36,8 +36,8 @@ import java.util.concurrent.RecursiveAction;
 /**
  * Delegated recursive action implementation
  *
- * @param <T>
- * @param <U>
+ * @param <T> - {@link Object}
+ * @param <U> - {@link DelegatedRecursiveAction}
  * @author Alex
  * @version 1.0.0
  * @since 2018-11-30
@@ -72,6 +72,6 @@ public abstract class DelegatedRecursiveAction<T, U extends DelegatedRecursiveAc
     protected abstract boolean validateCondition();
 
     protected void processing(final T value) {
-        LOGGER.info(String.format("The result=(%s) was processed by thread=(%s)", value, Thread.currentThread().getName()));
+        LOGGER.debug(String.format("The result=(%s) was processed by thread=(%s)", value, Thread.currentThread().getName()));
     }
 }

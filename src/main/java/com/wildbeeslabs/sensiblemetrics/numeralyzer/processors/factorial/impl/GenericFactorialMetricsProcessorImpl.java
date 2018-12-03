@@ -32,6 +32,9 @@ import lombok.ToString;
 /**
  * Generic factorial metrics processor implementation
  *
+ * @param <T> - {@link Object}
+ * @param <E> - {@link Object}
+ * @param <E> - {@link IFactorialMetrics}
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30

@@ -23,15 +23,14 @@
  */
 package com.wildbeeslabs.numeralizer;
 
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.AppLoader;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
  * Unit test case for AppLoader class
  *
  * @author Alex
@@ -43,11 +42,11 @@ public class AppLoaderTest {
     /**
      * Default logger instance
      */
-    private static final Logger LOGGER = LogManager.getLogger(AppLoaderTest.class);
+    protected static final Logger LOGGER = LogManager.getLogger(AppLoaderTest.class);
 
     @Before
     public void setUp() {
-        LOGGER.info("Initializing application loader...");
+        LOGGER.debug("Initializing application loader...");
     }
 
     @Test

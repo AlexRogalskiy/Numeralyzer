@@ -21,54 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.entities;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.lexical.impl;
 
-import java.io.Serializable;
-import java.util.Collection;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.impl.StringLexicalToken;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Generic lexical token term interface declaration
+ * String lexical token processor implementation
  *
- * @param <S> - {@link CharSequence}
- * @param <T> - {@link IGenericLexicalToken}
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-public interface IGenericLexicalTokenTerm<S extends CharSequence, T extends IGenericLexicalToken<S>> extends Serializable {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class StringLexicalTokenProcessorImpl extends GenericLexicalTokenProcessorImpl<String, StringLexicalToken> {
 
     /**
-     * Adds new token to the current term
-     *
-     * @param token - token to be stored
+     * Default constructor
      */
-    void addToken(final T token);
+    public StringLexicalTokenProcessorImpl() {
+        getLogger().debug("Initializing string lexical token processor...");
+    }
 
     /**
-     * Removes token from the current term
+     * Returns new string lexical token with input value
      *
-     * @param token - token to be removed
+     * @param value - input value
+     * @return new string lexical token
      */
-    void removeToken(final T token);
-
-    /**
-     * Sets a new collection of tokens to the current term
-     *
-     * @param tokenCollection - collection of tokens to be stored
-     */
-    void setTokens(final Collection<? extends T> tokenCollection);
-
-    /**
-     * Returns tokens collection of the current term
-     *
-     * @return collection of tokens
-     */
-    Collection<? extends T> getTokens();
-
-    /**
-     * Returns number of tokens of the current term
-     *
-     * @return number of tokens
-     */
-    int size();
+    @Override
+    protected StringLexicalToken createLexicalToken(String value) {
+        return new StringLexicalToken(value);
+    }
 }

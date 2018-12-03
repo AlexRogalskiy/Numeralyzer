@@ -23,15 +23,19 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer;
 
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.impl.StringLexicalToken;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial.impl.SimpleFactorialMetricsImpl;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.ICommandLineProcessor;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.factorial.IGenericFactorialMetricsProcessor;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.factorial.impl.SimpleFactorialMetricsProcessorImpl;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.CommandLineProcessorImpl;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.lexical.IGenericLexicalTokenProcessor;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.lexical.impl.StringLexicalTokenProcessorImpl;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.utils.FileUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -49,18 +53,21 @@ public class NumericAnalyzer {
     private static final Logger LOGGER = LogManager.getLogger(NumericAnalyzer.class);
 
     public void init(final String... args) {
-        LOGGER.info("Initializing command line processor...");
+        LOGGER.debug("Initializing command line processor...");
         final ICommandLineProcessor commandLineProcessor = new CommandLineProcessorImpl(args);
 
-        LOGGER.info("Initializing factorial simple metrics processor...");
-        final IGenericFactorialMetricsProcessor<Integer, Long, SimpleFactorialMetricsImpl> metricsProcessor = new SimpleFactorialMetricsProcessorImpl();
-        metricsProcessor.countTrailingZeros(-59);
-
+        LOGGER.debug("Initializing token processor...");
+        List<StringLexicalToken> tokenList = null;
+        final IGenericLexicalTokenProcessor<String, StringLexicalToken> tokenProcessor = new StringLexicalTokenProcessorImpl();
         if (Objects.nonNull(commandLineProcessor.getInputSource())) {
-            tokenTermList = FileUtils.readFile(commandLineProcessor.getInputSource(), analyzer);
+            tokenList = FileUtils.readFile(commandLineProcessor.getInputSource(), tokenProcessor);
         }
         if (Objects.nonNull(commandLineProcessor.getOutputSource())) {
-            FileUtils.writeFile(commandLineProcessor.getOutputSource(), tokenTermList);
+            FileUtils.writeFile(commandLineProcessor.getOutputSource(), tokenList);
         }
+
+        LOGGER.debug("Initializing factorial simple metrics processor...");
+        final IGenericFactorialMetricsProcessor<Integer, Long, SimpleFactorialMetricsImpl> metricsProcessor = new SimpleFactorialMetricsProcessorImpl();
+        metricsProcessor.countTrailingZeros(-59);
     }
 }

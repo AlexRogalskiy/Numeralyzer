@@ -26,7 +26,7 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.functions;
 /**
  * Counter interface declaration
  *
- * @param <T>
+ * @param <T> - {@link Object}
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30

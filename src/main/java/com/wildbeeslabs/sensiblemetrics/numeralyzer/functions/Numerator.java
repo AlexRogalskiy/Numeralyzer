@@ -23,17 +23,19 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.functions;
 
+import java.util.function.Function;
+
 /**
  * Numerator interface declaration
  *
- * @param <T>
- * @param <E>
+ * @param <T> - {@link Object}
+ * @param <E> - {@link Object}
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
 @FunctionalInterface
-public interface Numerator<T, E> {
+public interface Numerator<T, E> extends Function<T, E> {
 
     /**
      * Returns numerated value by initial input
@@ -41,5 +43,5 @@ public interface Numerator<T, E> {
      * @param value - initial input
      * @return value numerated from the initial input
      */
-    E numerate(final T value);
+    E apply(final T value);
 }

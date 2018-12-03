@@ -32,13 +32,15 @@ import java.util.IntSummaryStatistics;
 /**
  * Lexical token term metrics interface declaration
  *
- * @param <T>
- * @param <E>
+ * @param <S> - {@link CharSequence}
+ * @param <M> - {@link IGenericLexicalToken}
+ * @param <T> - {@link IGenericLexicalTokenTerm}
+ * @param <E> - {@link Object}
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-public interface ILexicalTokenTermMetrics<T extends IGenericLexicalTokenTerm<IGenericLexicalToken<CharSequence>>, E> extends IGenericMetrics<T, E> {
+public interface ILexicalTokenTermMetrics<S extends CharSequence, M extends IGenericLexicalToken<S>, T extends IGenericLexicalTokenTerm<S, M>, E> extends IGenericMetrics<T, E> {
 
     /**
      * Returns statistics of the input term

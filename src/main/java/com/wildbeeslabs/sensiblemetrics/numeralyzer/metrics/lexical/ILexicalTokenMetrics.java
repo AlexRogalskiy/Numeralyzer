@@ -31,13 +31,14 @@ import java.util.Set;
 /**
  * Lexical token metrics interface declaration
  *
- * @param <T>
- * @param <E>
+ * @param <S> - {@link CharSequence}
+ * @param <T> - {@link IGenericLexicalToken}
+ * @param <E> - {@link Object}
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-public interface ILexicalTokenMetrics<T extends IGenericLexicalToken<CharSequence>, E> extends IGenericMetrics<T, E> {
+public interface ILexicalTokenMetrics<S extends CharSequence, T extends IGenericLexicalToken<S>, E> extends IGenericMetrics<T, E> {
 
     /**
      * Returns character set of the current token

@@ -31,7 +31,7 @@ import java.util.UUID;
 /**
  * Generic lexical token interface declaration
  *
- * @param <T>
+ * @param <T> - {@link CharSequence}
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30

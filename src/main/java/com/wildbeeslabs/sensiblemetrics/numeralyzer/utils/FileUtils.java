@@ -23,6 +23,8 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.utils;
 
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.lexical.IGenericLexicalTokenProcessor;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -62,11 +64,11 @@ public final class FileUtils {
         // PRIVATE EMPTY CONSTRUCTOR
     }
 
-    public static List<String> readAllLines(final File inputFile) {
+    public static <U extends CharSequence> List<U> readAllLines(final File inputFile) {
         Objects.requireNonNull(inputFile);
-        List<String> resultList = Collections.EMPTY_LIST;
+        List<U> resultList = Collections.EMPTY_LIST;
         try {
-            resultList = Files.readAllLines(inputFile.toPath(), DEFAULT_FILE_CHARACTER_ENCODING);
+            resultList = (List<U>) Files.readAllLines(inputFile.toPath(), DEFAULT_FILE_CHARACTER_ENCODING);
         } catch (IOException ex) {
             LOGGER.error(String.format("ERROR: cannot read from input file=%s, message=%s", String.valueOf(inputFile), ex.getMessage()));
         }
@@ -82,6 +84,12 @@ public final class FileUtils {
             LOGGER.error(String.format("ERROR: cannot read from input file=%s, message=%s", String.valueOf(inputFile), ex.getMessage()));
         }
         return resultList;
+    }
+
+    public static <U extends CharSequence, T extends IGenericLexicalToken<U>> List<T> readFile(final File inputFile, final IGenericLexicalTokenProcessor<U, T> processor) {
+        Objects.requireNonNull(inputFile);
+        final List<U> inputList = readAllLines(inputFile);
+        return processor.getLexicalTokens(inputList.stream().map(word -> (U) word));
     }
 
     public static <U extends CharSequence> void writeFile(final File outputFile, final Collection<? extends U> output) {

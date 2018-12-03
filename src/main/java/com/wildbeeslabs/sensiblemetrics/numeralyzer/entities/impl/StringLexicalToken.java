@@ -23,55 +23,46 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.impl;
 
-
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Comparator;
-import java.util.Optional;
-import java.util.UUID;
 
 /**
- * Abstract generic lexical token class to store information on a raw data chunk
+ * String lexical token implementation
  *
- * @param <T>
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-@Data
-@EqualsAndHashCode(exclude = "id")
-@ToString
-public abstract class GenericLexicalTokenImpl<T extends CharSequence> implements IGenericLexicalToken<T> {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class StringLexicalToken extends GenericLexicalToken<String> {
 
-    @Setter(AccessLevel.NONE)
-    private final UUID id;
-    private final Comparator<? super T> comparator;
-    private final T data;
-
-    public GenericLexicalTokenImpl() {
-        this((T) StringUtils.EMPTY, (Comparator<? super T>) DEFAULT_TOKEN_COMPARATOR);
+    /**
+     * Default constructor
+     */
+    public StringLexicalToken() {
+        this(StringUtils.EMPTY);
     }
 
-    public GenericLexicalTokenImpl(final T data, final Comparator<? super T> comparator) {
-        this.id = UUID.randomUUID();
-        this.data = data;
-        this.comparator = comparator;
+    /**
+     * Default constructor with input data to store
+     *
+     * @param value - input data to store
+     */
+    public StringLexicalToken(final String value) {
+        this(value, (Comparator<? super String>) DEFAULT_TOKEN_COMPARATOR);
     }
 
-    @Override
-    public int length() {
-        return Optional.ofNullable(this.data).map(data -> data.length()).orElse(0);
-    }
-
-    @Override
-    public char charAt(int index) {
-        return Optional.ofNullable(this.data).map(data -> data.charAt(index)).orElse((char) 0);
-    }
-
-    @Override
-    public CharSequence subSequence(int start, int end) {
-        return Optional.ofNullable(this.data).map(data -> data.subSequence(start, end)).orElse(StringUtils.EMPTY);
+    /**
+     * Default constructor with input data and data comparator
+     *
+     * @param value      - input data to store
+     * @param comparator - input data comparator
+     */
+    public StringLexicalToken(final String value, final Comparator<? super String> comparator) {
+        super(value, comparator);
     }
 }

@@ -29,8 +29,8 @@ import java.util.Map;
 /**
  * Cache interface declaration
  *
- * @param <K>
- * @param <V>
+ * @param <K> - {@link Object}
+ * @param <V> - {@link Object}
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30

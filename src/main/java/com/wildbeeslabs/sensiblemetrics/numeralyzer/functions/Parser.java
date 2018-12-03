@@ -26,8 +26,8 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.functions;
 /**
  * Parser interface declaration
  *
- * @param <T>
- * @param <E>
+ * @param <T> - {@link Object}
+ * @param <E> - {@link Object}
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30

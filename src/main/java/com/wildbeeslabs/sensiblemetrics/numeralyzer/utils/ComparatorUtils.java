@@ -32,7 +32,7 @@ import java.util.Objects;
 /**
  * Helper class to handle comparator null-safe operations
  *
- * @param <T>
+ * @param <T> - {@link Object}
  * @author Alex
  * @version 1.0.0
  * @since 2018-11-30

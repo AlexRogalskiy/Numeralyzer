@@ -38,13 +38,16 @@ import java.util.stream.Stream;
 /**
  * Lexical token metrics implementation
  *
+ * @param <S> - {@link CharSequence}
+ * @param <T> - {@link IGenericLexicalToken}
+ * @param <E> - {@link Object}
  * @author Alex
  * @version 1.0.0
  * @since 2018-11-30
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class LexicalTokenMetricsImpl<T extends IGenericLexicalToken<CharSequence>, E> extends GenericMetricsImpl<T, E> implements ILexicalTokenMetrics<T, E> {
+public class LexicalTokenMetricsImpl<S extends CharSequence, T extends IGenericLexicalToken<S>, E> extends GenericMetricsImpl<T, E> implements ILexicalTokenMetrics<S, T, E> {
 
     /**
      * Default constructor
@@ -53,16 +56,34 @@ public class LexicalTokenMetricsImpl<T extends IGenericLexicalToken<CharSequence
         getLogger().debug("Initializing lexical token metrics...");
     }
 
+    /**
+     * Returns length of the current input token
+     *
+     * @param value - input token
+     * @return tokens length
+     */
     @Override
     public int length(final T value) {
         return value.length();
     }
 
+    /**
+     * Returns character set of the current input token
+     *
+     * @param value - input token
+     * @return tokens character set
+     */
     @Override
     public Set<Integer> characterSet(final T value) {
         return new HashSet<>(this.characterList(value));
     }
 
+    /**
+     * Returns character list of the current input token
+     *
+     * @param value - input token
+     * @return tokens character list
+     */
     private List<Integer> characterList(final T value) {
         return Stream.of(value.getData())
                 .flatMapToInt(CharSequence::chars)

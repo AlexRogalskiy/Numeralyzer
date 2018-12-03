@@ -26,11 +26,14 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.lexical;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IBaseProcessor;
 
+import java.util.List;
+import java.util.stream.Stream;
+
 /**
  * Generic lexical token processor declaration
  *
- * @param <T>
- * @param <E>
+ * @param <T> - {@link CharSequence}
+ * @param <E> - {@link IGenericLexicalToken}
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
@@ -40,5 +43,13 @@ public interface IGenericLexicalTokenProcessor<T extends CharSequence, E extends
     /**
      * Default stream token delimiter
      */
-    String DEFAULT_TOKEN_DELIMITER = "[,./?;:!-\"\\s]+?";
+    String DEFAULT_TOKEN_DELIMITER = "[,./?;:!-\"\\s#]+?";
+
+    /**
+     * Returns collection of tokens collected from input stream
+     *
+     * @param stream - input stream
+     * @return collection of tokens collected from input stream
+     */
+    List<E> getLexicalTokens(final Stream<T> stream);
 }

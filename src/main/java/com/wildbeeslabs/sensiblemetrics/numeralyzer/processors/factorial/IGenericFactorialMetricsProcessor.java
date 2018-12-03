@@ -29,9 +29,9 @@ import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IGenericMetricsPr
 /**
  * Generic factorial metrics processor declaration
  *
- * @param <T>
- * @param <E>
- * @param <R>
+ * @param <T> - {@link Object}
+ * @param <E> - {@link Object}
+ * @param <R> - {@link IFactorialMetrics}
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30

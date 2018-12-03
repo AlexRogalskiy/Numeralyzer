@@ -37,9 +37,9 @@ import java.util.concurrent.RecursiveTask;
 /**
  * Delegated recursive task implementation
  *
- * @param <T>
- * @param <R>
- * @param <U>
+ * @param <T> - {@link Object}
+ * @param <R> - {@link Object}
+ * @param <U> - {@link DelegatedRecursiveTask}
  * @author Alex
  * @version 1.0.0
  * @since 2018-11-30
@@ -84,7 +84,7 @@ public abstract class DelegatedRecursiveTask<T, R, U extends DelegatedRecursiveT
     protected abstract R reduceData(final R first, final R second);
 
     protected R processing(final T value) {
-        LOGGER.info(String.format("The result=(%s) was processed by thread=(%s)", value, Thread.currentThread().getName()));
+        LOGGER.debug(String.format("The result=(%s) was processed by thread=(%s)", value, Thread.currentThread().getName()));
         return this.process(value);
     }
 }

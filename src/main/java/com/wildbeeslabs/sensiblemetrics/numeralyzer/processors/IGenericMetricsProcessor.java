@@ -28,9 +28,9 @@ import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IGenericMetrics;
 /**
  * Generic metrics processor declaration
  *
- * @param <T>
- * @param <E>
- * @param <R>
+ * @param <T> - {@link Object}
+ * @param <E> - {@link Object}
+ * @param <R> - {@link IGenericMetrics}
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30

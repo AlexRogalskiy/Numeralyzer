@@ -23,6 +23,7 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.utils;
 
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.functions.Filter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -237,7 +238,7 @@ public final class ConverterUtils {
         return resultString.toString();
     }
 
-    public static <E> Stream<E> getFilteredStream(final Stream<E> stream, final Function<CharSequence, CharSequence> tokenFilter, final String tokenDelim) {
+    public static <E> Stream<E> getFilteredStream(final Stream<E> stream, final Filter<CharSequence, CharSequence> tokenFilter, final String tokenDelim) {
         return stream.flatMap(line -> Arrays.stream(String.valueOf(line).trim().split(tokenDelim)))
                 .map(item -> tokenFilter.apply(item))
                 .filter(StringUtils::isNotBlank)
