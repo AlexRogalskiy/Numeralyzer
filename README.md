@@ -1,13 +1,13 @@
 # Numeralizer
 The Numeric analyzer
 
-** How to build the application:
+***How to build the application:***
 
 ```aidl
 mvn clean compile assembly:single
 ```
 
-** Technical description
+***Technical description***
 
 Write a program that will calculate the number of trailing zeros in a factorial of a given number.
 
@@ -19,7 +19,7 @@ Be careful 1000! has 2568 digits...
 
 For more info, see: http://mathworld.wolfram.com/Factorial.html
 
-Examples:
+***Examples:***
 
 ```aidl
 zeros(6) = 1
