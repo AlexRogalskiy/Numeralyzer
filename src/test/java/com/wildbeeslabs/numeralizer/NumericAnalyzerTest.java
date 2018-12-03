@@ -40,6 +40,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.BlockJUnit4ClassRunner;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,12 +59,13 @@ import java.util.stream.Stream;
  * @version 1.0.0
  * @since 2018-11-30
  */
-public class NumericAnalyzerTestSuite {
+@RunWith(BlockJUnit4ClassRunner.class)
+public class NumericAnalyzerTest {
 
     /**
      * Default logger instance
      */
-    private static final Logger LOGGER = LogManager.getLogger(NumericAnalyzerTestSuite.class);
+    private static final Logger LOGGER = LogManager.getLogger(NumericAnalyzerTest.class);
 
     private IGenericLexicalTokenProcessor<String, StringLexicalToken> tokenProcessor = new StringLexicalTokenProcessorImpl();
 
@@ -83,7 +86,7 @@ public class NumericAnalyzerTestSuite {
     public void testReadInputData() {
         String inputFile = "src/test/resources/input.txt";
         List<StringLexicalToken> lexicalTokens = FileUtils.readFile(new File(inputFile), this.tokenProcessor);
-        Assert.assertEquals("Checking the size of the lexical token list: ", 8, lexicalTokens.size());
+        Assert.assertEquals("Checking the size of the lexical token list: ", 6, lexicalTokens.size());
 
         inputFile = "src/test/resources/input-empty.txt";
         lexicalTokens = FileUtils.readFile(new File(inputFile), this.tokenProcessor);
@@ -105,7 +108,7 @@ public class NumericAnalyzerTestSuite {
             final Long tokenData = tokenMetrics.valueOf(token, (StringLexicalToken value) -> Long.parseLong(value.getData().replaceAll("[\\D]", "")));
             return metricsProcessor.countTrailingZeros(tokenData);
         }).collect(Collectors.toList());
-        Assert.assertEquals("Checking the size of token list: ", 8, resultList.size());
+        Assert.assertEquals("Checking the size of token list: ", 6, resultList.size());
     }
 
     @Test
@@ -123,12 +126,12 @@ public class NumericAnalyzerTestSuite {
             final Long tokenData = tokenMetrics.valueOf(token, (StringLexicalToken value) -> Long.parseLong(value.getData().replaceAll("[\\D]", "")));
             return metricsProcessor.countTrailingZeros(tokenData);
         }).collect(Collectors.toList());
-        Assert.assertEquals("Checking the size of token list: ", 8, resultList.size());
+        Assert.assertEquals("Checking the size of token list: ", 6, resultList.size());
     }
 
     @Test
     public void testSimpleFactorialOutputData() {
-        final String inputFile = "src/test/resources/input.txt";
+        final String inputFile = "src/test/resources/input2.txt";
         final List<StringLexicalToken> lexicalTokens = FileUtils.readFile(new File(inputFile), this.tokenProcessor);
 
         final IStringLexicalTokenMetrics tokenMetrics = new StringLexicalTokenMetricsImpl();
@@ -147,7 +150,7 @@ public class NumericAnalyzerTestSuite {
         try (final Stream<String> stream = Files.lines(Paths.get(outputFile), FileUtils.DEFAULT_FILE_CHARACTER_ENCODING)) {
             final Optional<String> firstLine = stream.findFirst();
             Assert.assertTrue(firstLine.isPresent());
-            Assert.assertEquals("Checking the first line of output token list: ", "80 -> 19", firstLine.get());
+            Assert.assertEquals("Checking the first line of output token list: ", "2113935", firstLine.get());
         } catch (IOException ex) {
             LOGGER.error(String.format("ERROR: cannot read from input file=%s, message=%s", String.valueOf(outputFile), ex.getMessage()));
         }
@@ -155,7 +158,7 @@ public class NumericAnalyzerTestSuite {
 
     @Test
     public void testComplexFactorialOutputData() {
-        final String inputFile = "src/test/resources/input2.txt";
+        final String inputFile = "src/test/resources/input.txt";
         final List<StringLexicalToken> lexicalTokens = FileUtils.readFile(new File(inputFile), this.tokenProcessor);
 
         final IStringLexicalTokenMetrics tokenMetrics = new StringLexicalTokenMetricsImpl();
@@ -174,7 +177,7 @@ public class NumericAnalyzerTestSuite {
         try (final Stream<String> stream = Files.lines(Paths.get(outputFile), FileUtils.DEFAULT_FILE_CHARACTER_ENCODING)) {
             final Optional<String> firstLine = stream.findFirst();
             Assert.assertTrue(firstLine.isPresent());
-            Assert.assertEquals("Checking the first line of output token list: ", "80 -> 19", firstLine.get());
+            Assert.assertEquals("Checking the first line of output token list: ", "19", firstLine.get());
         } catch (IOException ex) {
             LOGGER.error(String.format("ERROR: cannot read from input file=%s, message=%s", String.valueOf(outputFile), ex.getMessage()));
         }

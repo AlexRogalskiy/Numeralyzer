@@ -30,6 +30,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.BlockJUnit4ClassRunner;
 
 /**
  * Test cases for NumberUtils class
@@ -38,6 +40,7 @@ import org.junit.Test;
  * @version 1.0.0
  * @since 2018-11-30
  */
+@RunWith(BlockJUnit4ClassRunner.class)
 public class NumberUtilsTest {
 
     /**

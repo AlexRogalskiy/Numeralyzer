@@ -29,6 +29,8 @@ import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.BlockJUnit4ClassRunner;
 
 /**
  * Unit test case for AppLoader class
@@ -37,6 +39,7 @@ import org.junit.Test;
  * @version 1.0.0
  * @since 2018-11-30
  */
+@RunWith(BlockJUnit4ClassRunner.class)
 public class AppLoaderTest {
 
     /**
