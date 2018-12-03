@@ -21,45 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.factorial;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.lexical;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalTokenTerm;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IGenericMetrics;
+
+import java.util.IntSummaryStatistics;
 
 /**
- * Standard factorial metrics implementation
+ * Lexical token term metrics interface declaration
  *
- * @author Alex
- * @version 1.0.0
- * @since 2017-08-07
+ * @param <T>
+ * @param <E>
+ * @author alexander.rogalskiy
+ * @version 1.0
+ * @since 2018-11-30
  */
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class StandardFactorialMetricsImpl extends BaseFactorialMetricsImpl<Integer, Integer> {
+public interface ILexicalTokenTermMetrics<T extends IGenericLexicalTokenTerm<IGenericLexicalToken<CharSequence>>, E> extends IGenericMetrics<T, E> {
 
     /**
-     * Default constructor
+     * Returns statistics of the input term
+     *
+     * @param value - input term
+     * @return - term statistics
      */
-    public StandardFactorialMetricsImpl() {
-        getLogger().debug("Initializing standard factorial metrics...");
-    }
+    IntSummaryStatistics getStatistics(final T value);
 
-    @Override
-    public long numOfTrailingZeros(final Integer value) {
-        long countOfZeros = 0, temp = value;
-        for (int i = 2; i <= temp; i++) {
-            //countOfZeros += this.countFactorsOf5(i);
-            countOfZeros += this.numOfFactors(i, (Integer n) -> this.countFactorsOf5(n));
-        }
-        return countOfZeros;
-    }
-
-    protected int countFactorsOf5(int value) {
-        int count = 0;
-        while (value % DIVISOR_5 == 0) {
-            count++;
-            value /= DIVISOR_5;
-        }
-        return count;
-    }
+    /**
+     * Returns average tokens length of the input term
+     *
+     * @param value - input term
+     * @return average tokens length
+     */
+    double getAverageTokenLength(final T value);
 }

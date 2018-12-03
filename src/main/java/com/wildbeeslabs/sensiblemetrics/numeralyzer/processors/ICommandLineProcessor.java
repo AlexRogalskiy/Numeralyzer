@@ -35,11 +35,6 @@ import java.io.File;
 public interface ICommandLineProcessor extends IBaseProcessor {
 
     /**
-     * Default stream token delimiter
-     */
-    String DEFAULT_TOKEN_DELIMITER = "[,./?;:!-\"\\s]+?";
-
-    /**
      * Verbose mode enumeration
      */
     enum VerboseMode {

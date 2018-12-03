@@ -21,48 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.factorial;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.factorial;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.factorial.SimpleFactorialMetricsImpl;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
-import java.util.Objects;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial.IFactorialMetrics;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IGenericMetricsProcessor;
 
 /**
- * Simple factorial metrics processor implementation
+ * Generic factorial metrics processor declaration
  *
+ * @param <T>
+ * @param <E>
+ * @param <R>
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class SimpleFactorialMetricsProcessorImpl extends BaseFactorialMetricsProcessorImpl<Integer, Long, SimpleFactorialMetricsImpl> {
+public interface IGenericFactorialMetricsProcessor<T, E, R extends IFactorialMetrics<T, E>> extends IGenericMetricsProcessor<T, E, R> {
 
     /**
-     * Default constructor
-     */
-    public SimpleFactorialMetricsProcessorImpl() {
-        getLogger().debug("Initializing simple factorial metrics processor...");
-    }
-
-    /**
-     * Returns trailing zeros in a factorial of input value
+     * Returns number of trailing zeros by input factorized value
      *
-     * @param value - value to be factorized
+     * @param value - input value to be processed
      * @return number of trailing zeros
      */
-    @Override
-    public Long countTrailingZeros(Integer value) {
-        if (Objects.isNull(value) || value < 0) {
-            return getDefaultResult();
-        }
-        return this.getMetrics().numOfTrailingZeros(value);
-    }
-
-    @Override
-    protected Long getDefaultResult() {
-        return Long.valueOf(0);
-    }
+    E countTrailingZeros(T value);
 }

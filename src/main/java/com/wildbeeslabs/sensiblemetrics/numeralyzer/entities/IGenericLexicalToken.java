@@ -21,48 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.factorial;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.entities;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.factorial.ComplexFactorialMetricsImpl;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
+import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
- * Complex factorial metrics processor implementation
+ * Generic lexical token interface declaration
  *
+ * @param <T>
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class ComplexFactorialMetricsProcessorImpl extends BaseFactorialMetricsProcessorImpl<Long, Long, ComplexFactorialMetricsImpl> {
+public interface IGenericLexicalToken<T extends CharSequence> extends CharSequence, Serializable {
 
     /**
-     * Default constructor
+     * Default lexical token comparator
      */
-    public ComplexFactorialMetricsProcessorImpl() {
-        getLogger().debug("Initializing complex factorial metrics processor...");
-    }
+    LexicalTokenComparator<? extends CharSequence> DEFAULT_TOKEN_COMPARATOR = new LexicalTokenComparator<>();
 
     /**
-     * Returns trailing 0s in a factorial of value
+     * Default lexical token comparator implementation
      *
-     * @param value - value to be factorized
-     * @return number of trailing zeros
+     * @param <T>
      */
-    @Override
-    public Long countTrailingZeros(Long value) {
-        if (Objects.isNull(value) || value < 0) {
-            return getDefaultResult();
+    class LexicalTokenComparator<T extends Comparable<? super T>> implements Comparator<T> {
+
+        @Override
+        public int compare(final T first, final T last) {
+            return Objects.compare(first, last, this);
         }
-        return this.getMetrics().numOfTrailingZeros(value);
     }
 
-    @Override
-    protected Long getDefaultResult() {
-        return Long.valueOf(0);
-    }
+    /**
+     * Returns UUID of the current token
+     *
+     * @return UUID of the current token
+     */
+    UUID getId();
+
+    /**
+     * Returns value of the current token
+     *
+     * @return value of the current token
+     */
+    T getData();
 }

@@ -53,6 +53,9 @@ public final class StringUtils {
      */
     private static final Logger LOGGER = LogManager.getLogger(StringUtils.class);
 
+    /**
+     * Default private constructor
+     */
     private StringUtils() {
         // PRIVATE EMPTY CONSTRUCTOR
     }

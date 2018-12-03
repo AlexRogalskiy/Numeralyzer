@@ -34,11 +34,11 @@ import lombok.ToString;
  * @param <E>
  * @author Alex
  * @version 1.0.0
- * @since 2017-08-07
+ * @since 2018-11-30
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public abstract class GenericMetricsImpl<T, E> extends ABaseMetricsImpl implements IGenericMetrics<T, E> {
+public abstract class GenericMetricsImpl<T, E> extends BaseMetricsImpl implements IGenericMetrics<T, E> {
 
     /**
      * Default constructor

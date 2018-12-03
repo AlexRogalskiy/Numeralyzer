@@ -24,9 +24,7 @@
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl;
 
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.ICommandLineProcessor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -41,7 +39,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Class to process input CLI arguments
+ * Command line class to process input CLI arguments
  *
  * @author alexander.rogalskiy
  * @version 1.0
@@ -50,7 +48,7 @@ import java.util.Objects;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class CommandLineProcessorImpl extends ABaseProcessorImpl implements ICommandLineProcessor {
+public class CommandLineProcessorImpl extends BaseProcessorImpl implements ICommandLineProcessor {
 
     /**
      * Default verbose mode
@@ -63,7 +61,8 @@ public class CommandLineProcessorImpl extends ABaseProcessorImpl implements ICom
     /**
      * Error status flag
      */
-    private boolean errorFlag = true;
+    @Setter(AccessLevel.NONE)
+    private boolean error = true;
 
     @Option(name = "-v", aliases = {"--mode"}, usage = "sets verbose mode {auto | short | full}", metaVar = "VERBOSE MODE", handler = StringOptionHandler.class)
     private VerboseMode mode;
@@ -74,6 +73,9 @@ public class CommandLineProcessorImpl extends ABaseProcessorImpl implements ICom
     @Option(name = "-i", aliases = {"--ignore-case"}, usage = "enables/disables ignore case mode", metaVar = "IGNORE CASE MODE", handler = ExplicitBooleanOptionHandler.class)
     private boolean ignoreCase;
 
+    /**
+     * Command line parse instance
+     */
     private final CmdLineParser parser;
 
     /**
@@ -82,6 +84,7 @@ public class CommandLineProcessorImpl extends ABaseProcessorImpl implements ICom
      * @param args - array of input arguments
      */
     public CommandLineProcessorImpl(final String... args) {
+        getLogger().debug("Initializing command line processor ...");
         this.parser = new CmdLineParser(this);
         this.initialize(args);
     }
@@ -92,7 +95,7 @@ public class CommandLineProcessorImpl extends ABaseProcessorImpl implements ICom
             this.initializeMode();
             this.initializeInputSource();
             this.initializeOutputSource();
-            this.errorFlag = false;
+            this.error = false;
         } catch (CmdLineException ex) {
             LOGGER.error(String.format("ERROR: cannot parse input / output arguments, message=(%s)", ex.getMessage()));
             LOGGER.error(String.format("Example: java -jar %s %s", "numeralyzer.jar", this.parser.printExample(OptionHandlerFilter.ALL)));

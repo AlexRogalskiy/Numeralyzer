@@ -32,5 +32,5 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics;
  * @version 1.0
  * @since 2018-11-30
  */
-public interface IGenericMetrics<T, E> {
+public interface IGenericMetrics<T, E> extends IBaseMetrics {
 }

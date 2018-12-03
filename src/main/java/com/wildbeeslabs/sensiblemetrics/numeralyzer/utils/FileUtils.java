@@ -55,6 +55,9 @@ public final class FileUtils {
      */
     public static final Charset DEFAULT_FILE_CHARACTER_ENCODING = StandardCharsets.UTF_8;
 
+    /**
+     * Default private constructor
+     */
     private FileUtils() {
         // PRIVATE EMPTY CONSTRUCTOR
     }

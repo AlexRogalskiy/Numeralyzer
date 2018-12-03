@@ -44,6 +44,9 @@ public final class ComparatorUtils<T> {
      */
     private static final Logger LOGGER = LogManager.getLogger(ComparatorUtils.class);
 
+    /**
+     * Default private constructor
+     */
     private ComparatorUtils() {
         // PRIVATE EMPTY CONSTRUCTOR
     }

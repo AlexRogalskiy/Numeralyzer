@@ -21,61 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.factorial.impl;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IGenericMetrics;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IGenericMetricsProcessor;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial.impl.ComplexFactorialMetricsImpl;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.util.Objects;
+
 /**
- * Generic metrics processor implementation
+ * Complex factorial metrics processor implementation
  *
- * @param <T>
- * @param <E>
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public abstract class GenericMetricsProcessorImpl<T, E, R extends IGenericMetrics<T, E>> extends BaseProcessorImpl implements IGenericMetricsProcessor<T, E, R> {
-
-    /**
-     * Default metrics instance
-     */
-    private R metrics;
+public class ComplexFactorialMetricsProcessorImpl extends GenericFactorialMetricsProcessorImpl<Long, Long, ComplexFactorialMetricsImpl> {
 
     /**
      * Default constructor
      */
-    public GenericMetricsProcessorImpl() {
-        getLogger().debug("Initializing generic metrics processor ...");
+    public ComplexFactorialMetricsProcessorImpl() {
+        getLogger().debug("Initializing complex factorial metrics processor...");
     }
 
     /**
-     * Returns current metrics instance
+     * Returns trailing zeros in a factorized input value
      *
-     * @return metrics instance
-     */
-    protected R getMetrics() {
-        return metrics;
-    }
-
-    /**
-     * Sets input metrics instance
-     *
-     * @param metrics - input metrics instance
+     * @param value - value to be factorized
+     * @return number of trailing zeros
      */
     @Override
-    public void setMetrics(final R metrics) {
-        this.metrics = metrics;
+    public Long countTrailingZeros(Long value) {
+        if (Objects.isNull(value) || value < 0) {
+            return this.getDefaultResult();
+        }
+        return this.getMetrics().numOfTrailingZeros(value);
     }
 
-    /**
-     * Returns default result
-     *
-     * @return default result
-     */
-    protected abstract E getDefaultResult();
+    @Override
+    protected Long getDefaultResult() {
+        return Long.valueOf(0);
+    }
 }

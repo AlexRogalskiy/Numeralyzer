@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.factorial;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial.impl;
 
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.cache.ICache;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.cache.impl.DelegatedCache;

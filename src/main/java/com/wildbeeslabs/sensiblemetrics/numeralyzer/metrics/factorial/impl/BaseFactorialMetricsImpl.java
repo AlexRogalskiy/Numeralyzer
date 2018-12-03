@@ -21,39 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial.impl;
 
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl;
-
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.functions.Counter;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial.IFactorialMetrics;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.GenericMetricsImpl;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Abstract base metrics class with default implementation
+ * Base factorial metrics implementation
  *
- * @author alexander.rogalskiy
- * @version 1.0
- * @since 2018-11-30
+ * @author Alex
+ * @version 1.0.0
+ * @since 2017-08-07
  */
-public abstract class ABaseMetricsImpl {
-
-    /**
-     * Default logger instance
-     */
-    protected final Logger LOGGER = LogManager.getLogger(getClass());
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public abstract class BaseFactorialMetricsImpl<T, E> extends GenericMetricsImpl<T, E> implements IFactorialMetrics<T, E> {
 
     /**
      * Default constructor
      */
-    public ABaseMetricsImpl() {
-        getLogger().debug("Initializing base metrics...");
+    public BaseFactorialMetricsImpl() {
+        getLogger().debug("Initializing base factorial metrics...");
     }
 
-    /**
-     * Returns logger instance
-     *
-     * @return logger instance
-     */
-    public Logger getLogger() {
-        return LOGGER;
+    @Override
+    public long numOfFactors(final T value, final Counter<T> counter) {
+        return counter.count(value);
     }
 }

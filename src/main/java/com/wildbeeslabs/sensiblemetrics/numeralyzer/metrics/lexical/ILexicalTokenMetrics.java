@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 WildBees Labs.
+ * Copyright 2018 WildBees Labs.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,19 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.lexical;
+
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IGenericMetrics;
+
+import java.util.Set;
 
 /**
+ * Lexical token metrics interface declaration
  *
- * Main Application class
- *
- * @author Alex
- * @version 1.0.0
+ * @param <T>
+ * @param <E>
+ * @author alexander.rogalskiy
+ * @version 1.0
  * @since 2018-11-30
  */
-public class AppLoader {
+public interface ILexicalTokenMetrics<T extends IGenericLexicalToken<CharSequence>, E> extends IGenericMetrics<T, E> {
 
-    public static void main(final String[] args) {
-        new NumericAnalyzer().init(args);
-    }
+    /**
+     * Returns character set of the current token
+     *
+     * @return character set of the current token
+     */
+    Set<Integer> characterSet(final T value);
+
+    /**
+     * Returns length of the current token in chars
+     *
+     * @return length of the current token
+     */
+    int length(final T value);
 }

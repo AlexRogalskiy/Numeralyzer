@@ -21,61 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.lexical.impl;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IGenericMetrics;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IGenericMetricsProcessor;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.BaseProcessorImpl;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.lexical.IGenericLexicalTokenProcessor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Optional;
+import java.util.function.Function;
 
 /**
- * Generic metrics processor implementation
+ * Generic lexical token class to process input char sequences
  *
- * @param <T>
- * @param <E>
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
+@Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public abstract class GenericMetricsProcessorImpl<T, E, R extends IGenericMetrics<T, E>> extends BaseProcessorImpl implements IGenericMetricsProcessor<T, E, R> {
+public class GenericLexicalTokenProcessorImpl<T extends CharSequence, E extends IGenericLexicalToken<T>> extends BaseProcessorImpl implements IGenericLexicalTokenProcessor<T, E> {
 
-    /**
-     * Default metrics instance
-     */
-    private R metrics;
-
-    /**
-     * Default constructor
-     */
-    public GenericMetricsProcessorImpl() {
-        getLogger().debug("Initializing generic metrics processor ...");
+    public GenericLexicalTokenProcessorImpl() {
+        getLogger().debug("Initializing generic lexical token processor...");
     }
 
-    /**
-     * Returns current metrics instance
-     *
-     * @return metrics instance
-     */
-    protected R getMetrics() {
-        return metrics;
+    protected Function<T, CharSequence> getDefaultFilter() {
+        return ((token) -> Optional.ofNullable(token).map(data -> data.toString().toLowerCase().trim()).orElse(StringUtils.EMPTY));
     }
-
-    /**
-     * Sets input metrics instance
-     *
-     * @param metrics - input metrics instance
-     */
-    @Override
-    public void setMetrics(final R metrics) {
-        this.metrics = metrics;
-    }
-
-    /**
-     * Returns default result
-     *
-     * @return default result
-     */
-    protected abstract E getDefaultResult();
 }

@@ -23,15 +23,19 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer;
 
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial.impl.SimpleFactorialMetricsImpl;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.ICommandLineProcessor;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IFactorialMetricsProcessor;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.factorial.IGenericFactorialMetricsProcessor;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.factorial.impl.SimpleFactorialMetricsProcessorImpl;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.CommandLineProcessorImpl;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.factorial.SimpleFactorialMetricsProcessorImpl;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.utils.FileUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.util.Objects;
+
 /**
- * Numeric analyzer class to operate on input / output number stream
+ * Numeric analyzer application to operate on input / output stream
  *
  * @author alexander.rogalskiy
  * @version 1.0
@@ -49,7 +53,14 @@ public class NumericAnalyzer {
         final ICommandLineProcessor commandLineProcessor = new CommandLineProcessorImpl(args);
 
         LOGGER.info("Initializing factorial simple metrics processor...");
-        final IFactorialMetricsProcessor<Integer, Long> metricsProcessor = new SimpleFactorialMetricsProcessorImpl();
+        final IGenericFactorialMetricsProcessor<Integer, Long, SimpleFactorialMetricsImpl> metricsProcessor = new SimpleFactorialMetricsProcessorImpl();
         metricsProcessor.countTrailingZeros(-59);
+
+        if (Objects.nonNull(commandLineProcessor.getInputSource())) {
+            tokenTermList = FileUtils.readFile(commandLineProcessor.getInputSource(), analyzer);
+        }
+        if (Objects.nonNull(commandLineProcessor.getOutputSource())) {
+            FileUtils.writeFile(commandLineProcessor.getOutputSource(), tokenTermList);
+        }
     }
 }

@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 WildBees Labs.
+ * Copyright 2018 WildBees Labs.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,19 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.factorial.impl;
+
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial.IFactorialMetrics;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.factorial.IGenericFactorialMetricsProcessor;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.GenericMetricsProcessorImpl;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
+ * Generic factorial metrics processor implementation
  *
- * Main Application class
- *
- * @author Alex
- * @version 1.0.0
+ * @author alexander.rogalskiy
+ * @version 1.0
  * @since 2018-11-30
  */
-public class AppLoader {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public abstract class GenericFactorialMetricsProcessorImpl<T, E, R extends IFactorialMetrics<T, E>> extends GenericMetricsProcessorImpl<T, E, R> implements IGenericFactorialMetricsProcessor<T, E, R> {
 
-    public static void main(final String[] args) {
-        new NumericAnalyzer().init(args);
+    /**
+     * Default constructor
+     */
+    public GenericFactorialMetricsProcessorImpl() {
+        getLogger().debug("Initializing generic factorial metrics processor...");
     }
 }

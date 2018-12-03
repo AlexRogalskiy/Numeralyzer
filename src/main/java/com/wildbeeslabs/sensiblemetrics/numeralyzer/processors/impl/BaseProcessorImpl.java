@@ -27,13 +27,8 @@ import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IBaseProcessor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-
-import java.util.Arrays;
-import java.util.function.Function;
-import java.util.stream.Stream;
 
 /**
  * Abstract base processor class with default implementation
@@ -45,7 +40,7 @@ import java.util.stream.Stream;
 @Data
 @EqualsAndHashCode
 @ToString
-public abstract class ABaseProcessorImpl implements IBaseProcessor {
+public abstract class BaseProcessorImpl implements IBaseProcessor {
 
     /**
      * Default logger instance
@@ -55,15 +50,8 @@ public abstract class ABaseProcessorImpl implements IBaseProcessor {
     /**
      * Default constructor
      */
-    public ABaseProcessorImpl() {
-        getLogger().debug("Initializing base processor ...");
-    }
-
-    protected <E> Stream<E> getFilteredStream(final Stream<E> stream, final Function<CharSequence, CharSequence> tokenFilter, final String tokenDelim) {
-        return stream.flatMap(line -> Arrays.stream(String.valueOf(line).trim().split(tokenDelim)))
-                .map(item -> tokenFilter.apply(item))
-                .filter(StringUtils::isNotBlank)
-                .map(item -> (E) item);
+    public BaseProcessorImpl() {
+        getLogger().debug("Initializing base processor...");
     }
 
     /**
@@ -73,9 +61,5 @@ public abstract class ABaseProcessorImpl implements IBaseProcessor {
      */
     protected Logger getLogger() {
         return this.LOGGER;
-    }
-
-    protected Function<CharSequence, CharSequence> getDefaultFilter() {
-        return ((word) -> String.valueOf(word).toLowerCase().trim());
     }
 }

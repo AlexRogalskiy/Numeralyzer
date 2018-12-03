@@ -21,29 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.factorial;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial.impl;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IFactorialMetrics;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IFactorialMetricsProcessor;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.GenericMetricsProcessorImpl;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Base factorial metrics processor implementation
+ * Simple factorial metrics implementation
  *
- * @author alexander.rogalskiy
- * @version 1.0
- * @since 2018-11-30
+ * @author Alex
+ * @version 1.0.0
+ * @since 2017-08-07
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public abstract class BaseFactorialMetricsProcessorImpl<T, E, R extends IFactorialMetrics<T, E>> extends GenericMetricsProcessorImpl<T, E, R> implements IFactorialMetricsProcessor<T, E, R> {
+public class SimpleFactorialMetricsImpl extends BaseFactorialMetricsImpl<Integer, Long> {
 
     /**
      * Default constructor
      */
-    public BaseFactorialMetricsProcessorImpl() {
-        getLogger().debug("Initializing base factorial metrics processor ...");
+    public SimpleFactorialMetricsImpl() {
+        getLogger().debug("Initializing simple factorial metrics...");
+    }
+
+    @Override
+    public long numOfTrailingZeros(final Integer value) {
+        long count = 0, temp = value;
+        while (temp > 0) {
+            temp /= DIVISOR_5;
+            count += temp;
+        }
+        return count;
     }
 }

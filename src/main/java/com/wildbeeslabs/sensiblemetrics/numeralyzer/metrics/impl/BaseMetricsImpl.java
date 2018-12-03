@@ -21,41 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.functions.Counter;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl;
+
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IBaseMetrics;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 /**
- * Factorial metrics interface declaration
+ * Abstract base metrics class with default implementation
  *
- * @param <T>
- * @param <E>
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-public interface IFactorialMetrics<T, E> extends IGenericMetrics<T, E> {
+public abstract class BaseMetricsImpl implements IBaseMetrics {
 
     /**
-     * Default factor divisors
+     * Default logger instance
      */
-    int DIVISOR_2 = 2;
-    int DIVISOR_5 = 5;
+    protected final Logger LOGGER = LogManager.getLogger(getClass());
 
     /**
-     * Returns number of trailing zeros calculated based on the initial input value
+     * Default constructor
+     */
+    public BaseMetricsImpl() {
+        getLogger().debug("Initializing base metrics...");
+    }
+
+    /**
+     * Returns logger instance
      *
-     * @param value - input value to be factorized
-     * @return number of trailing zeros
+     * @return logger instance
      */
-    long numOfTrailingZeros(final T value);
-
-    /**
-     * Returns number of factors calculated based on the initial input value
-     *
-     * @param value   - input value to be factorized
-     * @param counter - calculation function to process the input value
-     * @return number of factors
-     */
-    long numOfFactors(final T value, final Counter<T> counter);
+    public Logger getLogger() {
+        return LOGGER;
+    }
 }

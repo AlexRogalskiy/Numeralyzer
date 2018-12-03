@@ -57,6 +57,9 @@ public final class NumberUtils {
      */
     private static final ThreadLocal<DecimalFormat> numberFormat = ThreadLocal.withInitial(() -> new DecimalFormat(DEFAULT_NUMBER_FORMAT_PATTERN, DecimalFormatSymbols.getInstance(DEFAULT_LOCALE)));
 
+    /**
+     * Default private constructor
+     */
     private NumberUtils() {
         // PRIVATE EMPTY CONSTRUCTOR
     }

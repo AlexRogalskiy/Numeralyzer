@@ -21,27 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial.impl;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IFactorialMetrics;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Factorial metrics processor declaration
+ * Standard factorial metrics implementation
  *
- * @param <T>
- * @param <E>
- * @param <R>
- * @author alexander.rogalskiy
- * @version 1.0
- * @since 2018-11-30
+ * @author Alex
+ * @version 1.0.0
+ * @since 2017-08-07
  */
-public interface IFactorialMetricsProcessor<T, E, R extends IFactorialMetrics<T, E>> extends IGenericMetricsProcessor<T, E, R> {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class StandardFactorialMetricsImpl extends BaseFactorialMetricsImpl<Integer, Integer> {
 
     /**
-     * Returns number of trailing zeros by input factorized value
-     *
-     * @param value - input value to be processed
-     * @return number of trailing zeros
+     * Default constructor
      */
-    E countTrailingZeros(T value);
+    public StandardFactorialMetricsImpl() {
+        getLogger().debug("Initializing standard factorial metrics...");
+    }
+
+    @Override
+    public long numOfTrailingZeros(final Integer value) {
+        long countOfZeros = 0, temp = value;
+        for (int i = 2; i <= temp; i++) {
+            countOfZeros += this.numOfFactors(i, (Integer n) -> this.countFactorsOf5(n));
+        }
+        return countOfZeros;
+    }
+
+    protected int countFactorsOf5(int value) {
+        int count = 0;
+        while (value % DIVISOR_5 == 0) {
+            count++;
+            value /= DIVISOR_5;
+        }
+        return count;
+    }
 }

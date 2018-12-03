@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 WildBees Labs.
+ * Copyright 2018 WildBees Labs.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,19 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial;
+
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.functions.Counter;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IGenericMetrics;
 
 /**
+ * Factorial metrics interface declaration
  *
- * Main Application class
- *
- * @author Alex
- * @version 1.0.0
+ * @param <T>
+ * @param <E>
+ * @author alexander.rogalskiy
+ * @version 1.0
  * @since 2018-11-30
  */
-public class AppLoader {
+public interface IFactorialMetrics<T, E> extends IGenericMetrics<T, E> {
 
-    public static void main(final String[] args) {
-        new NumericAnalyzer().init(args);
-    }
+    /**
+     * Default factor divisors
+     */
+    int DIVISOR_2 = 2;
+    int DIVISOR_5 = 5;
+
+    /**
+     * Returns number of trailing zeros calculated based on the initial input value
+     *
+     * @param value - input value to be factorized
+     * @return number of trailing zeros
+     */
+    long numOfTrailingZeros(final T value);
+
+    /**
+     * Returns number of factors calculated based on the initial input value
+     *
+     * @param value   - input value to be factorized
+     * @param counter - calculation function to process the input value
+     * @return number of factors
+     */
+    long numOfFactors(final T value, final Counter<T> counter);
 }

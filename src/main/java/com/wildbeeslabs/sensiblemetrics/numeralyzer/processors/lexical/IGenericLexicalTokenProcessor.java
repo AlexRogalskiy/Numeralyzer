@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 WildBees Labs.
+ * Copyright 2018 WildBees Labs.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,19 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.lexical;
+
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IBaseProcessor;
 
 /**
+ * Generic lexical token processor declaration
  *
- * Main Application class
- *
- * @author Alex
- * @version 1.0.0
+ * @param <T>
+ * @param <E>
+ * @author alexander.rogalskiy
+ * @version 1.0
  * @since 2018-11-30
  */
-public class AppLoader {
+public interface IGenericLexicalTokenProcessor<T extends CharSequence, E extends IGenericLexicalToken<T>> extends IBaseProcessor {
 
-    public static void main(final String[] args) {
-        new NumericAnalyzer().init(args);
-    }
+    /**
+     * Default stream token delimiter
+     */
+    String DEFAULT_TOKEN_DELIMITER = "[,./?;:!-\"\\s]+?";
 }

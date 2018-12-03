@@ -21,34 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.factorial;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.lexical.impl;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.functions.Counter;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IFactorialMetrics;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.GenericMetricsImpl;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.lexical.ILexicalTokenMetrics;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
- * Base actorial metrics implementation
+ * Lexical token metrics implementation
  *
  * @author Alex
  * @version 1.0.0
- * @since 2017-08-07
+ * @since 2018-11-30
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public abstract class BaseFactorialMetricsImpl<T, E> extends GenericMetricsImpl<T, E> implements IFactorialMetrics<T, E> {
+public class LexicalTokenMetricsImpl<T extends IGenericLexicalToken<CharSequence>, E> extends GenericMetricsImpl<T, E> implements ILexicalTokenMetrics<T, E> {
 
     /**
      * Default constructor
      */
-    public BaseFactorialMetricsImpl() {
-        getLogger().debug("Initializing base factorial metrics...");
+    public LexicalTokenMetricsImpl() {
+        getLogger().debug("Initializing lexical token metrics...");
     }
 
     @Override
-    public long numOfFactors(final T value, final Counter<T> counter) {
-        return counter.count(value);
+    public int length(final T value) {
+        return value.length();
+    }
+
+    @Override
+    public Set<Integer> characterSet(final T value) {
+        return new HashSet<>(this.characterList(value));
+    }
+
+    private List<Integer> characterList(final T value) {
+        return Stream.of(value.getData())
+                .flatMapToInt(CharSequence::chars)
+                .mapToObj(c -> Integer.valueOf(c))
+                .collect(Collectors.toList());
     }
 }

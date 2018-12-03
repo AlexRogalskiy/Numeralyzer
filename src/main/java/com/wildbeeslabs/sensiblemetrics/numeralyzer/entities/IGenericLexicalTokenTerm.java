@@ -21,36 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.factorial;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.entities;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import java.io.Serializable;
+import java.util.Collection;
 
 /**
- * Simple factorial metrics implementation
+ * Generic lexical token term interface declaration
  *
- * @author Alex
- * @version 1.0.0
- * @since 2017-08-07
+ * @param <T>
+ * @author alexander.rogalskiy
+ * @version 1.0
+ * @since 2018-11-30
  */
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class SimpleFactorialMetricsImpl extends BaseFactorialMetricsImpl<Integer, Long> {
+public interface IGenericLexicalTokenTerm<T extends IGenericLexicalToken<CharSequence>> extends Serializable {
 
     /**
-     * Default constructor
+     * Adds new token to the current term
+     *
+     * @param token - token to be stored
      */
-    public SimpleFactorialMetricsImpl() {
-        getLogger().debug("Initializing simple factorial metrics...");
-    }
+    void addToken(final T token);
 
-    @Override
-    public long numOfTrailingZeros(final Integer value) {
-        long count = 0, temp = value;
-        while (temp > 0) {
-            temp /= DIVISOR_5;
-            count += temp;
-        }
-        return count;
-    }
+    /**
+     * Removes token from the current term
+     *
+     * @param token - token to be removed
+     */
+    void removeToken(final T token);
+
+    /**
+     * Sets a new collection of tokens to the current term
+     *
+     * @param tokenCollection - collection of tokens to be stored
+     */
+    void setTokens(final Collection<? extends T> tokenCollection);
+
+    /**
+     * Returns tokens collection of the current term
+     *
+     * @return collection of tokens
+     */
+    Collection<? extends T> getTokens();
+
+    /**
+     * Returns number of tokens of the current term
+     *
+     * @return number of tokens
+     */
+    int size();
 }
