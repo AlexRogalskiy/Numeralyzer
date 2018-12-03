@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 WildBees Labs.
+ * Copyright 2018 WildBees Labs.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ import org.junit.Test;
  *
  * @author Alex
  * @version 1.0.0
- * @since 2017-12-12
+ * @since 2018-11-30
  */
 public class AppLoaderTest {
 
@@ -50,10 +50,18 @@ public class AppLoaderTest {
     }
 
     @Test
-    public void testMain() {
+    public void testMainWithShortArgs() {
         final String firstArg = "src/main/resources/INPUT.txt";
         final String secondArg = "src/main/resources/OUTPUT.txt";
         final String[] args = new String[]{"-in", firstArg, "-out", secondArg};
+        AppLoader.main(args);
+    }
+
+    @Test
+    public void testMainWithFullArgs() {
+        final String firstArg = "src/main/resources/INPUT.txt";
+        final String secondArg = "src/main/resources/OUTPUT.txt";
+        final String[] args = new String[]{"-in-source", firstArg, "-out-source", secondArg};
         AppLoader.main(args);
     }
 

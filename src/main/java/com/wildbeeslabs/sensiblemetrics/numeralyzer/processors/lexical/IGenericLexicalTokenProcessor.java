@@ -43,7 +43,7 @@ public interface IGenericLexicalTokenProcessor<T extends CharSequence, E extends
     /**
      * Default lexical token stream delimiter
      */
-    String DEFAULT_TOKEN_DELIMITER = "[,./?;:!-\"\\s#]+?";
+    String DEFAULT_TOKEN_DELIMITER = "[,./?;:\\-\"\\s#]+?";
 
     /**
      * Returns collection of lexical tokens collected from input stream

@@ -73,14 +73,14 @@ public class NumericAnalyzer {
         LOGGER.debug(String.format("Input collection of lexical tokens: {%s}", StringUtils.join(lexicalTokens, "|")));
 
         final IStringLexicalTokenMetrics tokenMetrics = new StringLexicalTokenMetricsImpl();
-        SimpleFactorialMetricsProcessorImpl metricsProcessor = new SimpleFactorialMetricsProcessorImpl();
+        final SimpleFactorialMetricsProcessorImpl metricsProcessor = new SimpleFactorialMetricsProcessorImpl();
         metricsProcessor.setMetrics(new SimpleFactorialMetricsImpl());
         //ComplexFactorialMetricsProcessorImpl metricsProcessor = new ComplexFactorialMetricsProcessorImpl();
         //metricsProcessor.setMetrics(new ComplexFactorialMetricsImpl());
 
-        final List<Long> factorialTokenList = lexicalTokens.stream().map(token -> {
+        final List<String> factorialTokenList = lexicalTokens.stream().map(token -> {
             final Long tokenData = tokenMetrics.valueOf(token, (StringLexicalToken value) -> Long.parseLong(value.getData().replaceAll("[\\D]", "")));
-            return metricsProcessor.countTrailingZeros(tokenData);
+            return tokenData + " -> " + metricsProcessor.countTrailingZeros(tokenData);
         }).collect(Collectors.toList());
 
         LOGGER.debug(String.format("Output collection of factorized lexical tokens: {%s}", StringUtils.join(factorialTokenList, "|")));
