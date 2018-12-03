@@ -41,15 +41,15 @@ import java.util.stream.Stream;
 public interface IGenericLexicalTokenProcessor<T extends CharSequence, E extends IGenericLexicalToken<T>> extends IBaseProcessor {
 
     /**
-     * Default stream token delimiter
+     * Default lexical token stream delimiter
      */
     String DEFAULT_TOKEN_DELIMITER = "[,./?;:!-\"\\s#]+?";
 
     /**
-     * Returns collection of tokens collected from input stream
+     * Returns collection of lexical tokens collected from input stream
      *
      * @param stream - input stream
-     * @return collection of tokens collected from input stream
+     * @return collection of lexical tokens collected from input stream
      */
     List<E> getLexicalTokens(final Stream<T> stream);
 }

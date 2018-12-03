@@ -21,40 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.lexical;
-
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalTokenTerm;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IGenericMetrics;
-
-import java.util.IntSummaryStatistics;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial;
 
 /**
- * Lexical token term metrics interface declaration
+ * Complex factorial metrics interface declaration
  *
- * @param <S> - {@link CharSequence}
- * @param <M> - {@link IGenericLexicalToken}
- * @param <T> - {@link IGenericLexicalTokenTerm}
- * @param <E> - {@link Object}
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-public interface ILexicalTokenTermMetrics<S extends CharSequence, M extends IGenericLexicalToken<S>, T extends IGenericLexicalTokenTerm<S, M>, E> extends IGenericMetrics<T, E> {
-
-    /**
-     * Returns statistics of the input term
-     *
-     * @param value - input term
-     * @return - term statistics
-     */
-    IntSummaryStatistics getStatistics(final T value);
-
-    /**
-     * Returns average tokens length of the input term
-     *
-     * @param value - input term
-     * @return average tokens length
-     */
-    double getAverageTokenLength(final T value);
+public interface IComplexFactorialMetrics extends IFactorialMetrics<Long, Long> {
 }

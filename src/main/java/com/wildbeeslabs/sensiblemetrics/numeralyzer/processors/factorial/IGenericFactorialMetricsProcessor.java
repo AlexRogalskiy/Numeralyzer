@@ -44,5 +44,5 @@ public interface IGenericFactorialMetricsProcessor<T, E, R extends IFactorialMet
      * @param value - input value to be processed
      * @return number of trailing zeros
      */
-    E countTrailingZeros(T value);
+    E countTrailingZeros(final T value);
 }

@@ -75,7 +75,7 @@ public final class FileUtils {
         return resultList;
     }
 
-    public static List<String> readFileByFilter(final File inputFile, final Predicate<String> predicate) {
+    public static List<String> readFileByFilter(final File inputFile, final Predicate<? super String> predicate) {
         Objects.requireNonNull(inputFile);
         List<String> resultList = Collections.EMPTY_LIST;
         try (final BufferedReader br = Files.newBufferedReader(inputFile.toPath(), DEFAULT_FILE_CHARACTER_ENCODING)) {
@@ -89,10 +89,10 @@ public final class FileUtils {
     public static <U extends CharSequence, T extends IGenericLexicalToken<U>> List<T> readFile(final File inputFile, final IGenericLexicalTokenProcessor<U, T> processor) {
         Objects.requireNonNull(inputFile);
         final List<U> inputList = readAllLines(inputFile);
-        return processor.getLexicalTokens(inputList.stream().map(word -> (U) word));
+        return processor.getLexicalTokens(inputList.stream());
     }
 
-    public static <U extends CharSequence> void writeFile(final File outputFile, final Collection<? extends U> output) {
+    public static <U> void writeFile(final File outputFile, final Collection<? extends U> output) {
         Objects.requireNonNull(outputFile);
         Objects.requireNonNull(output);
         try (final PrintWriter writer = new PrintWriter(Files.newBufferedWriter(outputFile.toPath(), DEFAULT_FILE_CHARACTER_ENCODING))) {

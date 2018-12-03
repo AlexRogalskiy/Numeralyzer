@@ -25,21 +25,25 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer;
 
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.impl.StringLexicalToken;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial.impl.SimpleFactorialMetricsImpl;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.lexical.IStringLexicalTokenMetrics;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.lexical.impl.StringLexicalTokenMetricsImpl;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.ICommandLineProcessor;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.factorial.IGenericFactorialMetricsProcessor;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.factorial.impl.SimpleFactorialMetricsProcessorImpl;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl.CommandLineProcessorImpl;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.lexical.IGenericLexicalTokenProcessor;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.lexical.impl.StringLexicalTokenProcessorImpl;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.utils.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
- * Numeric analyzer application to operate on input / output stream
+ * Numeric analyzer application to operate on input/output stream
  *
  * @author alexander.rogalskiy
  * @version 1.0
@@ -52,22 +56,37 @@ public class NumericAnalyzer {
      */
     private static final Logger LOGGER = LogManager.getLogger(NumericAnalyzer.class);
 
+    /**
+     * Initial entry point of numeric analyzer application
+     *
+     * @param args - array of input arguments
+     */
     public void init(final String... args) {
-        LOGGER.debug("Initializing command line processor...");
         final ICommandLineProcessor commandLineProcessor = new CommandLineProcessorImpl(args);
 
-        LOGGER.debug("Initializing token processor...");
-        List<StringLexicalToken> tokenList = null;
+        List<StringLexicalToken> lexicalTokens = Collections.emptyList();
         final IGenericLexicalTokenProcessor<String, StringLexicalToken> tokenProcessor = new StringLexicalTokenProcessorImpl();
         if (Objects.nonNull(commandLineProcessor.getInputSource())) {
-            tokenList = FileUtils.readFile(commandLineProcessor.getInputSource(), tokenProcessor);
-        }
-        if (Objects.nonNull(commandLineProcessor.getOutputSource())) {
-            FileUtils.writeFile(commandLineProcessor.getOutputSource(), tokenList);
+            lexicalTokens = FileUtils.readFile(commandLineProcessor.getInputSource(), tokenProcessor);
         }
 
-        LOGGER.debug("Initializing factorial simple metrics processor...");
-        final IGenericFactorialMetricsProcessor<Integer, Long, SimpleFactorialMetricsImpl> metricsProcessor = new SimpleFactorialMetricsProcessorImpl();
-        metricsProcessor.countTrailingZeros(-59);
+        LOGGER.debug(String.format("Input collection of lexical tokens: {%s}", StringUtils.join(lexicalTokens, "|")));
+
+        final IStringLexicalTokenMetrics tokenMetrics = new StringLexicalTokenMetricsImpl();
+        SimpleFactorialMetricsProcessorImpl metricsProcessor = new SimpleFactorialMetricsProcessorImpl();
+        metricsProcessor.setMetrics(new SimpleFactorialMetricsImpl());
+        //ComplexFactorialMetricsProcessorImpl metricsProcessor = new ComplexFactorialMetricsProcessorImpl();
+        //metricsProcessor.setMetrics(new ComplexFactorialMetricsImpl());
+
+        final List<Long> factorialTokenList = lexicalTokens.stream().map(token -> {
+            final Long tokenData = tokenMetrics.valueOf(token, (StringLexicalToken value) -> Long.parseLong(value.getData().replaceAll("[\\D]", "")));
+            return metricsProcessor.countTrailingZeros(tokenData);
+        }).collect(Collectors.toList());
+
+        LOGGER.debug(String.format("Output collection of factorized lexical tokens: {%s}", StringUtils.join(factorialTokenList, "|")));
+
+        if (Objects.nonNull(commandLineProcessor.getOutputSource())) {
+            FileUtils.writeFile(commandLineProcessor.getOutputSource(), factorialTokenList);
+        }
     }
 }

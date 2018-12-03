@@ -23,34 +23,14 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.lexical;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IGenericMetrics;
-
-import java.util.Set;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.impl.StringLexicalToken;
 
 /**
- * Lexical token metrics interface declaration
+ * String lexical token metrics interface declaration
  *
- * @param <S> - {@link CharSequence}
- * @param <T> - {@link IGenericLexicalToken}
- * @param <E> - {@link Object}
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-public interface ILexicalTokenMetrics<S extends CharSequence, T extends IGenericLexicalToken<S>, E> extends IGenericMetrics<T, E> {
-
-    /**
-     * Returns character set of the current token
-     *
-     * @return character set of the current token
-     */
-    Set<Integer> characterSet(final T value);
-
-    /**
-     * Returns length of the current token in chars
-     *
-     * @return length of the current token
-     */
-    int length(final T value);
+public interface IStringLexicalTokenMetrics extends IGenericLexicalTokenMetrics<String, StringLexicalToken, Long> {
 }

@@ -56,6 +56,12 @@ public abstract class GenericLexicalTokenProcessorImpl<T extends CharSequence, E
         getLogger().debug("Initializing generic lexical token processor...");
     }
 
+    /**
+     * Returns collection of lexical tokens by input stream
+     *
+     * @param stream - input stream
+     * @return collection of lexical tokens
+     */
     @Override
     public List<E> getLexicalTokens(final Stream<T> stream) {
         return this.getLexicalTokenList(stream, this.getDefaultFilter(), DEFAULT_TOKEN_DELIMITER);
@@ -67,7 +73,7 @@ public abstract class GenericLexicalTokenProcessorImpl<T extends CharSequence, E
      * @param stream         - input stream
      * @param tokenFilter    - token filter function
      * @param tokenDelimiter - token delimiter
-     * @return lexical token list
+     * @return collection of lexical tokens
      */
     protected List<E> getLexicalTokenList(final Stream<T> stream, final Filter<CharSequence, CharSequence> tokenFilter, final String tokenDelimiter) {
         final Stream<T> filteredStream = ConverterUtils.getFilteredStream(stream, tokenFilter, tokenDelimiter);
@@ -75,12 +81,12 @@ public abstract class GenericLexicalTokenProcessorImpl<T extends CharSequence, E
     }
 
     /**
-     * Returns default token filter
+     * Returns default lexical token filter
      *
-     * @return default token filter
+     * @return default lexical token filter
      */
     protected Filter<CharSequence, CharSequence> getDefaultFilter() {
-        return ((token) -> Optional.ofNullable(token).map(data -> data.toString().toLowerCase().trim()).orElse(StringUtils.EMPTY));
+        return (token -> Optional.ofNullable(token).map(data -> data.toString().toLowerCase().trim()).orElse(StringUtils.EMPTY));
     }
 
     /**

@@ -23,7 +23,7 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.factorial.impl;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial.impl.ComplexFactorialMetricsImpl;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial.IComplexFactorialMetrics;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -38,7 +38,7 @@ import java.util.Objects;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class ComplexFactorialMetricsProcessorImpl extends GenericFactorialMetricsProcessorImpl<Long, Long, ComplexFactorialMetricsImpl> {
+public class ComplexFactorialMetricsProcessorImpl extends GenericFactorialMetricsProcessorImpl<Long, Long, IComplexFactorialMetrics> {
 
     /**
      * Default constructor
@@ -56,13 +56,13 @@ public class ComplexFactorialMetricsProcessorImpl extends GenericFactorialMetric
     @Override
     public Long countTrailingZeros(Long value) {
         if (Objects.isNull(value) || value < 0) {
-            return this.getDefaultResult();
+            return this.getDefault();
         }
         return this.getMetrics().numOfTrailingZeros(value);
     }
 
     @Override
-    protected Long getDefaultResult() {
-        return Long.valueOf(0);
+    protected Long getDefault() {
+        return 0L;
     }
 }

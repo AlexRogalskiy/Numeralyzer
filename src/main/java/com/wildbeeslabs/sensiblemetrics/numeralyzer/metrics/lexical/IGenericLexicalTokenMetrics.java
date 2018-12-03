@@ -21,48 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.factorial.impl;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.lexical;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial.ISimpleFactorialMetrics;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.functions.Parser;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IGenericMetrics;
 
-import java.util.Objects;
+import java.util.Set;
 
 /**
- * Simple factorial metrics processor implementation
+ * Lexical token metrics interface declaration
  *
+ * @param <S> - {@link CharSequence}
+ * @param <T> - {@link IGenericLexicalToken}
+ * @param <E> - {@link Object}
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class SimpleFactorialMetricsProcessorImpl extends GenericFactorialMetricsProcessorImpl<Long, Long, ISimpleFactorialMetrics> {
+public interface IGenericLexicalTokenMetrics<S extends CharSequence, T extends IGenericLexicalToken<S>, E> extends IGenericMetrics<T, E> {
 
     /**
-     * Default constructor
-     */
-    public SimpleFactorialMetricsProcessorImpl() {
-        getLogger().debug("Initializing simple factorial metrics processor...");
-    }
-
-    /**
-     * Returns trailing zeros in a factorized input value
+     * Returns character set of the input lexical token
      *
-     * @param value - value to be factorized
-     * @return number of trailing zeros
+     * @return character set of the input lexical token
      */
-    @Override
-    public Long countTrailingZeros(final Long value) {
-        if (Objects.isNull(value) || value < 0) {
-            return this.getDefault();
-        }
-        return this.getMetrics().numOfTrailingZeros(value);
-    }
+    Set<Integer> characterSet(final T value);
 
-    @Override
-    protected Long getDefault() {
-        return 0L;
-    }
+    /**
+     * Returns length of the input lexical token in chars
+     *
+     * @return length of the input lexical token
+     */
+    int length(final T value);
+
+    /**
+     * Returns formatted representation of the input lexical token by parser function
+     *
+     * @param value  - input value
+     * @param parser - input parser function
+     * @return formatted representation of input value
+     */
+    E valueOf(final T value, final Parser<T, E> parser);
 }

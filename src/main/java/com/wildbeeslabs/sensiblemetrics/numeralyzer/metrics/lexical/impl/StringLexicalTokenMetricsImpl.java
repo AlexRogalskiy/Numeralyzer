@@ -21,48 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.factorial.impl;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.lexical.impl;
 
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial.ISimpleFactorialMetrics;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.impl.StringLexicalToken;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.lexical.IStringLexicalTokenMetrics;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.util.Objects;
-
 /**
- * Simple factorial metrics processor implementation
+ * String lexical token metrics implementation
  *
- * @author alexander.rogalskiy
- * @version 1.0
+ * @author Alex
+ * @version 1.0.0
  * @since 2018-11-30
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class SimpleFactorialMetricsProcessorImpl extends GenericFactorialMetricsProcessorImpl<Long, Long, ISimpleFactorialMetrics> {
+public class StringLexicalTokenMetricsImpl extends GenericLexicalTokenMetricsImpl<String, StringLexicalToken, Long> implements IStringLexicalTokenMetrics {
 
     /**
      * Default constructor
      */
-    public SimpleFactorialMetricsProcessorImpl() {
-        getLogger().debug("Initializing simple factorial metrics processor...");
-    }
-
-    /**
-     * Returns trailing zeros in a factorized input value
-     *
-     * @param value - value to be factorized
-     * @return number of trailing zeros
-     */
-    @Override
-    public Long countTrailingZeros(final Long value) {
-        if (Objects.isNull(value) || value < 0) {
-            return this.getDefault();
-        }
-        return this.getMetrics().numOfTrailingZeros(value);
-    }
-
-    @Override
-    protected Long getDefault() {
-        return 0L;
+    public StringLexicalTokenMetricsImpl() {
+        getLogger().debug("Initializing string lexical token metrics...");
     }
 }

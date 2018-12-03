@@ -23,6 +23,7 @@
  */
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial.impl;
 
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial.ISimpleFactorialMetrics;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -35,7 +36,7 @@ import lombok.ToString;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class SimpleFactorialMetricsImpl extends BaseFactorialMetricsImpl<Integer, Long> {
+public class SimpleFactorialMetricsImpl extends BaseFactorialMetricsImpl<Long, Long> implements ISimpleFactorialMetrics {
 
     /**
      * Default constructor
@@ -45,7 +46,7 @@ public class SimpleFactorialMetricsImpl extends BaseFactorialMetricsImpl<Integer
     }
 
     @Override
-    public long numOfTrailingZeros(final Integer value) {
+    public long numOfTrailingZeros(final Long value) {
         long count = 0, temp = value;
         while (temp > 0) {
             temp /= DIVISOR_5;

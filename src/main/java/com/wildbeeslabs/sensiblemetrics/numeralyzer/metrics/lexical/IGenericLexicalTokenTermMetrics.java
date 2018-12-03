@@ -21,62 +21,50 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.impl;
+package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.lexical;
 
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalTokenTerm;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.functions.Numerator;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.IGenericMetrics;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.processors.IGenericMetricsProcessor;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+
+import java.util.LongSummaryStatistics;
 
 /**
- * Generic metrics processor implementation
+ * Lexical token term metrics interface declaration
  *
- * @param <T> - {@link Object}
+ * @param <S> - {@link CharSequence}
+ * @param <M> - {@link IGenericLexicalToken}
+ * @param <T> - {@link IGenericLexicalTokenTerm}
  * @param <E> - {@link Object}
- * @param <R> - {@link IGenericMetrics}
  * @author alexander.rogalskiy
  * @version 1.0
  * @since 2018-11-30
  */
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public abstract class GenericMetricsProcessorImpl<T, E, R extends IGenericMetrics<T, E>> extends BaseProcessorImpl implements IGenericMetricsProcessor<T, E, R> {
+public interface IGenericLexicalTokenTermMetrics<S extends CharSequence, M extends IGenericLexicalToken<S>, T extends IGenericLexicalTokenTerm<S, M>, E> extends IGenericMetrics<T, E> {
 
     /**
-     * Default metrics instance
-     */
-    private R metrics;
-
-    /**
-     * Default constructor
-     */
-    public GenericMetricsProcessorImpl() {
-        getLogger().debug("Initializing generic metrics processor ...");
-    }
-
-    /**
-     * Returns current metrics instance
+     * Returns statistics of the input lexical term
      *
-     * @return metrics instance
+     * @param value - input lexical term
+     * @return lexical term statistics
      */
-    protected R getMetrics() {
-        return metrics;
-    }
+    LongSummaryStatistics getStatistics(final T value);
 
     /**
-     * Sets input metrics instance
+     * Returns average tokens length of the input lexical term
      *
-     * @param metrics - input metrics instance
+     * @param value - input lexical term
+     * @return average tokens length
      */
-    @Override
-    public void setMetrics(final R metrics) {
-        this.metrics = metrics;
-    }
+    double getAverageTokenLength(final T value);
 
     /**
-     * Returns default metrics result
+     * Returns number of items of the input lexical term numerated by input mapper function
      *
-     * @return default metrics result
+     * @param value     - input lexical token
+     * @param numerator - input numerator function
+     * @return
      */
-    protected abstract E getDefault();
+    long count(final T value, final Numerator<M, Long> numerator);
 }

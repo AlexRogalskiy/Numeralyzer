@@ -24,7 +24,6 @@
 package com.wildbeeslabs.sensiblemetrics.numeralyzer;
 
 /**
- *
  * Main Application class
  *
  * @author Alex
@@ -33,6 +32,11 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer;
  */
 public class AppLoader {
 
+    /**
+     * Initialize application context of numeric analyzer
+     *
+     * @param args - array of input arguments
+     */
     public static void main(final String[] args) {
         new NumericAnalyzer().init(args);
     }

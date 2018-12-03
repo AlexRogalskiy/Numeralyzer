@@ -24,8 +24,9 @@
 package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.lexical.impl;
 
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToken;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.functions.Parser;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.GenericMetricsImpl;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.lexical.ILexicalTokenMetrics;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.lexical.IGenericLexicalTokenMetrics;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -36,7 +37,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Lexical token metrics implementation
+ * Abstract lexical token metrics implementation
  *
  * @param <S> - {@link CharSequence}
  * @param <T> - {@link IGenericLexicalToken}
@@ -47,12 +48,12 @@ import java.util.stream.Stream;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class LexicalTokenMetricsImpl<S extends CharSequence, T extends IGenericLexicalToken<S>, E> extends GenericMetricsImpl<T, E> implements ILexicalTokenMetrics<S, T, E> {
+public abstract class GenericLexicalTokenMetricsImpl<S extends CharSequence, T extends IGenericLexicalToken<S>, E> extends GenericMetricsImpl<T, E> implements IGenericLexicalTokenMetrics<S, T, E> {
 
     /**
      * Default constructor
      */
-    public LexicalTokenMetricsImpl() {
+    public GenericLexicalTokenMetricsImpl() {
         getLogger().debug("Initializing lexical token metrics...");
     }
 
@@ -65,6 +66,18 @@ public class LexicalTokenMetricsImpl<S extends CharSequence, T extends IGenericL
     @Override
     public int length(final T value) {
         return value.length();
+    }
+
+    /**
+     * Returns new representation of input token value by parser function
+     *
+     * @param value  - input value
+     * @param parser - input parser function
+     * @return representation of input token
+     */
+    @Override
+    public E valueOf(final T value, final Parser<T, E> parser) {
+        return parser.parse(value);
     }
 
     /**

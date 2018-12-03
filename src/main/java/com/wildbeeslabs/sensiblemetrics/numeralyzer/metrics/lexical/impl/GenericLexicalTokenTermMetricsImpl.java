@@ -27,16 +27,16 @@ import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalToke
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.entities.IGenericLexicalTokenTerm;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.functions.Numerator;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.impl.GenericMetricsImpl;
-import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.lexical.ILexicalTokenTermMetrics;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.lexical.IGenericLexicalTokenTermMetrics;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.utils.ConverterUtils;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.util.IntSummaryStatistics;
+import java.util.LongSummaryStatistics;
 import java.util.stream.Collectors;
 
 /**
- * Lexical token metrics implementation
+ * Abstract lexical token term metrics implementation
  *
  * @param <S> - {@link CharSequence}
  * @param <M> - {@link IGenericLexicalToken}
@@ -48,28 +48,28 @@ import java.util.stream.Collectors;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class LexicalTokenTermMetricsImpl<S extends CharSequence, M extends IGenericLexicalToken<S>, T extends IGenericLexicalTokenTerm<S, M>, E> extends GenericMetricsImpl<T, E> implements ILexicalTokenTermMetrics<S, M, T, E> {
+public abstract class GenericLexicalTokenTermMetricsImpl<S extends CharSequence, M extends IGenericLexicalToken<S>, T extends IGenericLexicalTokenTerm<S, M>, E> extends GenericMetricsImpl<T, E> implements IGenericLexicalTokenTermMetrics<S, M, T, E> {
 
     /**
      * Default constructor
      */
-    public LexicalTokenTermMetricsImpl() {
+    public GenericLexicalTokenTermMetricsImpl() {
         getLogger().debug("Initializing lexical token term metrics...");
     }
 
     /**
-     * Returns summary statistics of the current input term
+     * Returns summary statistics of the input lexical term
      *
      * @param value - input term
      * @return summary statistics
      */
     @Override
-    public IntSummaryStatistics getStatistics(final T value) {
-        return value.getTokens().stream().collect(Collectors.summarizingInt((token) -> token.length()));
+    public LongSummaryStatistics getStatistics(final T value) {
+        return value.getTokens().stream().collect(Collectors.summarizingLong((token) -> token.length()));
     }
 
     /**
-     * Returns average tokens length of the current input term
+     * Returns average tokens length of the input lexical term
      *
      * @param value - input term
      * @return average tokens length
@@ -80,13 +80,14 @@ public class LexicalTokenTermMetricsImpl<S extends CharSequence, M extends IGene
     }
 
     /**
-     * Returns number of tokens of the current input term counted by input mapper function
+     * Returns number of items of the input lexical term numerated by input mapper function
      *
-     * @param value  input term
-     * @param mapper mapper function
+     * @param value     - input lexical term
+     * @param numerator - input numerator function
      * @return number of tokens in the term
      */
-    protected int count(final T value, final Numerator<M, Integer> mapper) {
-        return ConverterUtils.reduceStreamBy(value.getTokens().stream().map(mapper), 0, (i1, i2) -> (i1 + i2));
+    @Override
+    public long count(final T value, final Numerator<M, Long> numerator) {
+        return ConverterUtils.reduceStreamBy(value.getTokens().stream().map(numerator), 0L, (i1, i2) -> (i1 + i2));
     }
 }

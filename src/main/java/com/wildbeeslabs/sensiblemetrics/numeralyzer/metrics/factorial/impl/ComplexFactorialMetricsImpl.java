@@ -25,6 +25,7 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial.impl;
 
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.cache.ICache;
 import com.wildbeeslabs.sensiblemetrics.numeralyzer.cache.impl.DelegatedCache;
+import com.wildbeeslabs.sensiblemetrics.numeralyzer.metrics.factorial.IComplexFactorialMetrics;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -37,7 +38,7 @@ import lombok.ToString;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class ComplexFactorialMetricsImpl extends BaseFactorialMetricsImpl<Long, Long> {
+public class ComplexFactorialMetricsImpl extends BaseFactorialMetricsImpl<Long, Long> implements IComplexFactorialMetrics {
 
     /**
      * Default counting maps
