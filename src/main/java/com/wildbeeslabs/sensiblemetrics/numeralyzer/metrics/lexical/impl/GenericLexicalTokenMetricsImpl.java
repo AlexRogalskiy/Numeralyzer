@@ -65,7 +65,7 @@ public abstract class GenericLexicalTokenMetricsImpl<S extends CharSequence, T e
      */
     @Override
     public int length(final T value) {
-        return value.length();
+        return value.getData().length();
     }
 
     /**

@@ -55,7 +55,7 @@ public interface IGenericLexicalToken<T extends CharSequence> extends CharSequen
             return Objects.compare(first, last, this);
         }
     }
-
+    
     /**
      * Returns UUID of the current token
      *

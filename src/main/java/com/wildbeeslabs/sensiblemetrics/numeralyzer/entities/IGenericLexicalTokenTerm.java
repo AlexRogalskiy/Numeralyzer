@@ -25,6 +25,7 @@ package com.wildbeeslabs.sensiblemetrics.numeralyzer.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Generic lexical token term interface declaration

@@ -65,7 +65,7 @@ public abstract class GenericLexicalTokenTermMetricsImpl<S extends CharSequence,
      */
     @Override
     public LongSummaryStatistics getStatistics(final T value) {
-        return value.getTokens().stream().collect(Collectors.summarizingLong((token) -> token.length()));
+        return value.getTokens().stream().collect(Collectors.summarizingLong((M token) -> token.getData().length()));
     }
 
     /**
@@ -76,7 +76,7 @@ public abstract class GenericLexicalTokenTermMetricsImpl<S extends CharSequence,
      */
     @Override
     public double getAverageTokenLength(final T value) {
-        return value.getTokens().stream().mapToInt((token) -> token.length()).average().getAsDouble();
+        return value.getTokens().stream().mapToInt((token) -> token.getData().length()).average().getAsDouble();
     }
 
     /**
